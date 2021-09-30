@@ -1,4 +1,3 @@
-import ThemeToggle from "components/Toolbar/ThemeToggle";
 import { ThemeProvider } from "configs";
 
 function App() {
