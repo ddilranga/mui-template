@@ -16,13 +16,25 @@ const Main = styled("main", { shouldForwardProp: prop => prop !== "open" })<{
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen
   }),
-  marginLeft: `-${drawerWidth}px`,
+  marginLeft: 0,
   ...(open && {
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     }),
-    marginLeft: 0
+    marginLeft: `${drawerWidth}px`
+  })
+}));
+
+const Footer = styled("footer", {
+  shouldForwardProp: prop => prop !== "open"
+})<{
+  open?: boolean;
+}>(({ theme, open }) => ({
+  marginLeft: 0,
+  padding: theme.spacing(3),
+  ...(open && {
+    marginLeft: `${drawerWidth}px`
   })
 }));
 
@@ -45,7 +57,8 @@ const UserLayout = () => {
   return (
     <Box
       sx={{
-        display: "flex"
+        display: "flex",
+        flexWrap: "wrap"
       }}
     >
       <Toolbar open={open} toggle={toggleDrawer} />
@@ -88,8 +101,7 @@ const UserLayout = () => {
           posuere sollicitudin aliquam ultrices sagittis orci a.
         </Typography>
       </Main>
-
-      <Box>Footer</Box>
+      <Footer open={open}>Footer</Footer>
     </Box>
   );
 };
