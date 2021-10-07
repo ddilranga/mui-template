@@ -6,7 +6,7 @@ import {
   Toolbar as MuiToolbar,
   IconButton
 } from "@mui/material";
-import { styled } from "@mui/system";
+import { styled } from "@mui/material";
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;

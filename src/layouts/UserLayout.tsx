@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
-import { Box, styled } from "@mui/system";
+import { styled } from "@mui/material";
+import { Box } from "@mui/system";
 import Sidebar from "components/Sidebar";
 import Toolbar from "components/Toolbar";
 import { useState } from "react";
