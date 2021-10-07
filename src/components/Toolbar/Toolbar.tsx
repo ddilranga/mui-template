@@ -2,11 +2,13 @@ import { Menu as MenuIcon } from "@mui/icons-material";
 import {
   AppBar as MuiAppBar,
   AppBarProps as MuiAppBarProps,
-  Typography,
+  IconButton,
+  Stack,
+  styled,
   Toolbar as MuiToolbar,
-  IconButton
+  Typography
 } from "@mui/material";
-import { styled } from "@mui/material";
+import ThemeToggle from "./ThemeToggle";
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -41,18 +43,36 @@ const Toolbar = ({
   return (
     <AppBar position="fixed" open={open}>
       <MuiToolbar component="nav">
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={() => toggle(true)}
-          edge="start"
-          sx={{ mr: 2, ...(open && { display: "none" }) }}
+        <Stack>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={() => toggle(true)}
+            edge="start"
+            sx={{ mr: 2, ...(open && { display: "none" }) }}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Stack>
+        <Stack
+          direction="row"
+          alignItems="center"
+          width="100%"
+          justifyContent="space-between"
         >
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6" noWrap component="div">
-          Persistent drawer
-        </Typography>
+          <Typography variant="h6" noWrap component="div">
+            Home
+          </Typography>
+
+          <Stack
+            direction="row"
+            spacing="4"
+            alignItems="center"
+            justifyContent="flex-end"
+          >
+            <ThemeToggle />
+          </Stack>
+        </Stack>
       </MuiToolbar>
     </AppBar>
   );

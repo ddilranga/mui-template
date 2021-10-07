@@ -15,7 +15,7 @@ const ThemeToggle = () => {
     <IconButton
       sx={{ ml: 1, bgcolor: "background.default", color: "text.primary" }}
       onClick={colorMode.toggleColorMode}
-      color="inherit"
+      // color="inherit"
     >
       {theme.palette.mode === "dark" ? <MoonIcon /> : <SunIcon />}
     </IconButton>
