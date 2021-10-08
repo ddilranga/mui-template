@@ -31,6 +31,7 @@ const Footer = styled("footer", {
 })<{
   open?: boolean;
 }>(({ theme, open }) => ({
+  marginTop: "auto",
   marginLeft: 0,
   padding: theme.spacing(3),
   ...(open && {
@@ -58,7 +59,9 @@ const UserLayout = () => {
     <Box
       sx={{
         display: "flex",
-        flexWrap: "wrap"
+        flexDirection: "column",
+        flexWrap: "wrap",
+        minHeight: "100vh"
       }}
     >
       <Toolbar open={open} toggle={toggleDrawer} />
