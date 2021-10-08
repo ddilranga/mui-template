@@ -11,10 +11,21 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText
-  // useMediaQuery,
 } from "@mui/material";
-// import { Theme } from "@mui/system";
 import React from "react";
+import { INavLinkGroup } from "./Sidebar.types";
+
+const routes: INavLinkGroup[] = [
+  {
+    links: [
+      {
+        name: "something",
+        url: "/something"
+      }
+    ],
+    name: "Test Group Name"
+  }
+];
 
 const Sidebar = ({
   drawerWidth,
@@ -27,7 +38,7 @@ const Sidebar = ({
   open: boolean;
   toggle: (open: boolean) => void;
 }) => {
-  // const mobile = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
+  console.log(routes);
 
   return (
     <Drawer
@@ -39,7 +50,6 @@ const Sidebar = ({
           boxSizing: "border-box"
         }
       }}
-      // variant={mobile ? "temporary" : "persistent"}
       variant={"persistent"}
       anchor="left"
       open={open}
