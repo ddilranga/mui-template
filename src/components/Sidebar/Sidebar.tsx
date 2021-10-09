@@ -1,88 +1,96 @@
+import { ChevronLeft, ExpandLess, ExpandMore } from "@mui/icons-material";
 import {
-  ChevronLeft,
-  Inbox as InboxIcon,
-  Mail as MailIcon
-} from "@mui/icons-material";
-import {
-  Divider,
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText
+	Collapse,
+	Divider,
+	Drawer,
+	IconButton,
+	List,
+	ListItemButton,
+	ListItemIcon,
+	ListItemText,
+	ListSubheader,
 } from "@mui/material";
-import React from "react";
-import { INavLinkGroup } from "./Sidebar.types";
+import React, { useMemo, useState } from "react";
+import { INavLink, INavLinkGroup, ISidebarProps } from "./Sidebar.types";
 
-const routes: INavLinkGroup[] = [
-  {
-    links: [
-      {
-        name: "something",
-        url: "/something"
-      }
-    ],
-    name: "Test Group Name"
-  }
-];
-
-const Sidebar = ({
-  drawerWidth,
-  header: DrawerHeader,
-  open,
-  toggle
+const NavLink = ({
+	route: { isExpanded: isRouteExpanded, links, name, icon },
 }: {
-  drawerWidth: number;
-  header: React.FC;
-  open: boolean;
-  toggle: (open: boolean) => void;
+	route: INavLink;
 }) => {
-  console.log(routes);
+	const [isExpanded, setIsExpanded] = useState(isRouteExpanded);
 
-  return (
-    <Drawer
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: drawerWidth,
-          boxSizing: "border-box"
-        }
-      }}
-      variant={"persistent"}
-      anchor="left"
-      open={open}
-    >
-      <DrawerHeader>
-        <IconButton onClick={() => toggle(false)}>
-          <ChevronLeft />
-        </IconButton>
-      </DrawerHeader>
-      <Divider />
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </Drawer>
-  );
+	return (
+		<>
+			<ListItemButton onClick={() => setIsExpanded(!isExpanded)}>
+				<ListItemIcon>{icon}</ListItemIcon>
+				<ListItemText primary={name} />
+				{links &&
+					links.length > 0 &&
+					(isExpanded ? <ExpandLess /> : <ExpandMore />)}
+			</ListItemButton>
+			<Collapse in={isExpanded} timeout="auto" unmountOnExit>
+				<List component="div" disablePadding>
+					{links && getNavLinks(links)}
+				</List>
+			</Collapse>
+		</>
+	);
 };
 
-export default Sidebar;
+const getNavLinks = (links: INavLink[]) => {
+	return links.map((route) => <NavLink route={route} key={route.key} />);
+};
+
+const getRoutes = (groups: INavLinkGroup[]) => {
+	return groups.map((group, index) => (
+		<List
+			key={index}
+			component="nav"
+			aria-labelledby={`list-subheader${index}`}
+			subheader={
+				<ListSubheader component="div" id={`list-subheader${index}`}>
+					{group.name}
+				</ListSubheader>
+			}
+		>
+			{group.links && getNavLinks(group.links)}
+		</List>
+	));
+};
+
+const Sidebar = ({
+	drawerWidth,
+	header: DrawerHeader,
+	open,
+	toggle,
+	groups,
+}: ISidebarProps) => {
+	const navGroupRenderer = useMemo(() => getRoutes(groups), [groups]);
+
+	return (
+		<Drawer
+			sx={{
+				width: drawerWidth,
+				flexShrink: 0,
+				"& .MuiDrawer-paper": {
+					width: drawerWidth,
+					boxSizing: "border-box",
+				},
+			}}
+			variant={"persistent"}
+			anchor="left"
+			open={open}
+		>
+			<DrawerHeader>
+				<IconButton onClick={() => toggle(false)}>
+					<ChevronLeft />
+				</IconButton>
+			</DrawerHeader>
+			<Divider />
+			{navGroupRenderer}
+		</Drawer>
+	);
+};
+
+export default React.memo(Sidebar);
