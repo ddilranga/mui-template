@@ -1,9 +1,10 @@
 import { styled } from "@mui/material";
 import { Box } from "@mui/system";
 import Sidebar from "components/Sidebar";
+import { ISidebarProps } from "components/Sidebar/Sidebar.types";
 import Toolbar from "components/Toolbar";
 import { navigation, routes } from "configs";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate, useRoutes } from "react-router";
 
 const drawerWidth = 240;
@@ -53,11 +54,19 @@ const UserLayout = () => {
 	const [open, setOpen] = useState(true);
 
 	const navigate = useNavigate();
-	const routesRenderer = useRoutes(routes());
+	const routesRenderer = useRoutes(routes);
 
-	const toggleDrawer = (open: boolean) => {
+	const onLinkClick: ISidebarProps["onLinkClick"] = useCallback(
+		(event, item) => {
+			event?.preventDefault();
+			item?.url && navigate(item.url);
+		},
+		[]
+	);
+
+	const toggleDrawer = useCallback((open: boolean) => {
 		setOpen(open);
-	};
+	}, []);
 
 	return (
 		<Box
@@ -76,10 +85,7 @@ const UserLayout = () => {
 				open={open}
 				toggle={toggleDrawer}
 				header={DrawerHeader}
-				onLinkClick={(event, item) => {
-					event?.preventDefault();
-					item?.url && navigate(item.url);
-				}}
+				onLinkClick={onLinkClick}
 			/>
 			<Main open={open}>
 				<DrawerHeader />
