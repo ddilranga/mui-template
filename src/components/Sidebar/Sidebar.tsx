@@ -11,18 +11,28 @@ import {
 	ListSubheader,
 } from "@mui/material";
 import React, { useMemo, useState } from "react";
+import { SidebarContextProvider, useSidebarContext } from "./Sidebar.context";
 import { INavLink, INavLinkGroup, ISidebarProps } from "./Sidebar.types";
 
-const NavLink = ({
-	route: { isExpanded: isRouteExpanded, links, name, icon },
-}: {
-	route: INavLink;
-}) => {
+const NavLink = ({ route }: { route: INavLink }) => {
+	const { isExpanded: isRouteExpanded, links, name, icon, onClick } = route;
+
 	const [isExpanded, setIsExpanded] = useState(isRouteExpanded);
+	const { onLinkClick } = useSidebarContext();
+
+	const onClickItem = (
+		e: React.MouseEvent<HTMLElement, MouseEvent> | undefined
+	) => {
+		const passedFunc = onClick ? onClick : onLinkClick;
+
+		passedFunc?.(e, route);
+
+		if (links && links.length > 0) setIsExpanded(!isExpanded);
+	};
 
 	return (
 		<>
-			<ListItemButton onClick={() => setIsExpanded(!isExpanded)}>
+			<ListItemButton onClick={onClickItem}>
 				<ListItemIcon>{icon}</ListItemIcon>
 				<ListItemText primary={name} />
 				{links &&
@@ -30,7 +40,7 @@ const NavLink = ({
 					(isExpanded ? <ExpandLess /> : <ExpandMore />)}
 			</ListItemButton>
 			<Collapse in={isExpanded} timeout="auto" unmountOnExit>
-				<List component="div" disablePadding>
+				<List component="div" disablePadding dense>
 					{links && getNavLinks(links)}
 				</List>
 			</Collapse>
@@ -46,6 +56,7 @@ const getRoutes = (groups: INavLinkGroup[]) => {
 	return groups.map((group, index) => (
 		<List
 			key={index}
+			dense
 			component="nav"
 			aria-labelledby={`list-subheader${index}`}
 			subheader={
@@ -65,6 +76,7 @@ const Sidebar = ({
 	open,
 	toggle,
 	groups,
+	onLinkClick,
 }: ISidebarProps) => {
 	const navGroupRenderer = useMemo(() => getRoutes(groups), [groups]);
 
@@ -88,7 +100,9 @@ const Sidebar = ({
 				</IconButton>
 			</DrawerHeader>
 			<Divider />
-			{navGroupRenderer}
+			<SidebarContextProvider value={{ onLinkClick }}>
+				{navGroupRenderer}
+			</SidebarContextProvider>
 		</Drawer>
 	);
 };
