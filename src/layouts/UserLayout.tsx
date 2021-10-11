@@ -4,7 +4,7 @@ import Sidebar from "components/Sidebar";
 import Toolbar from "components/Toolbar";
 import { navigation, routes } from "configs";
 import { useState } from "react";
-import { useRoutes } from "react-router";
+import { useNavigate, useRoutes } from "react-router";
 
 const drawerWidth = 240;
 
@@ -52,6 +52,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const UserLayout = () => {
 	const [open, setOpen] = useState(true);
 
+	const navigate = useNavigate();
 	const routesRenderer = useRoutes(routes());
 
 	const toggleDrawer = (open: boolean) => {
@@ -75,6 +76,10 @@ const UserLayout = () => {
 				open={open}
 				toggle={toggleDrawer}
 				header={DrawerHeader}
+				onLinkClick={(event, item) => {
+					event?.preventDefault();
+					item?.url && navigate(item.url);
+				}}
 			/>
 			<Main open={open}>
 				<DrawerHeader />
