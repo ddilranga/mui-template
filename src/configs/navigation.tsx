@@ -1,4 +1,7 @@
-import { Dashboard as DashboardIcon } from "@mui/icons-material";
+import {
+	AccountBox as ProfileIcon,
+	Dashboard as DashboardIcon,
+} from "@mui/icons-material";
 import { INavLinkGroup } from "components/Sidebar/Sidebar.types";
 
 const navigation: INavLinkGroup[] = [
@@ -12,6 +15,17 @@ const navigation: INavLinkGroup[] = [
 			},
 		],
 		name: "Apps",
+	},
+	{
+		links: [
+			{
+				name: "Profile",
+				url: "/pages/profile",
+				key: "profile",
+				icon: <ProfileIcon />,
+			},
+		],
+		name: "Pages",
 	},
 ];
 
