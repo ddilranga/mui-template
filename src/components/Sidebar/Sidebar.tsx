@@ -1,110 +1,110 @@
 import { ChevronLeft, ExpandLess, ExpandMore } from "@mui/icons-material";
 import {
-	Collapse,
-	Divider,
-	Drawer,
-	IconButton,
-	List,
-	ListItemButton,
-	ListItemIcon,
-	ListItemText,
-	ListSubheader,
+  Collapse,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
 } from "@mui/material";
 import React, { useMemo, useState } from "react";
 import { SidebarContextProvider, useSidebarContext } from "./Sidebar.context";
 import { INavLink, INavLinkGroup, ISidebarProps } from "./Sidebar.types";
 
 const NavLink = ({ route }: { route: INavLink }) => {
-	const { isExpanded: isRouteExpanded, links, name, icon, onClick } = route;
+  const { isExpanded: isRouteExpanded, links, name, icon, onClick } = route;
 
-	const [isExpanded, setIsExpanded] = useState(isRouteExpanded);
-	const { onLinkClick } = useSidebarContext();
+  const [isExpanded, setIsExpanded] = useState(isRouteExpanded);
+  const { onLinkClick } = useSidebarContext();
 
-	const onClickItem = (
-		e: React.MouseEvent<HTMLElement, MouseEvent> | undefined
-	) => {
-		const passedFunc = onClick ? onClick : onLinkClick;
+  const onClickItem = (
+    e: React.MouseEvent<HTMLElement, MouseEvent> | undefined
+  ) => {
+    const passedFunc = onClick ? onClick : onLinkClick;
 
-		passedFunc?.(e, route);
+    passedFunc?.(e, route);
 
-		if (links && links.length > 0) setIsExpanded(!isExpanded);
-	};
+    if (links && links.length > 0) setIsExpanded(!isExpanded);
+  };
 
-	return (
-		<>
-			<ListItemButton onClick={onClickItem}>
-				<ListItemIcon>{icon}</ListItemIcon>
-				<ListItemText primary={name} />
-				{links &&
-					links.length > 0 &&
-					(isExpanded ? <ExpandLess /> : <ExpandMore />)}
-			</ListItemButton>
-			<Collapse in={isExpanded} timeout="auto" unmountOnExit>
-				<List component="div" disablePadding dense>
-					{links && getNavLinks(links)}
-				</List>
-			</Collapse>
-		</>
-	);
+  return (
+    <>
+      <ListItemButton onClick={onClickItem}>
+        <ListItemIcon>{icon}</ListItemIcon>
+        <ListItemText primary={name} />
+        {links &&
+          links.length > 0 &&
+          (isExpanded ? <ExpandLess /> : <ExpandMore />)}
+      </ListItemButton>
+      <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding dense>
+          {links && getNavLinks(links)}
+        </List>
+      </Collapse>
+    </>
+  );
 };
 
 const getNavLinks = (links: INavLink[]) => {
-	return links.map((route) => <NavLink route={route} key={route.key} />);
+  return links.map((route) => <NavLink route={route} key={route.key} />);
 };
 
 const getRoutes = (groups: INavLinkGroup[]) => {
-	return groups.map((group, index) => (
-		<List
-			key={index}
-			dense
-			component="nav"
-			aria-labelledby={`list-subheader${index}`}
-			subheader={
-				<ListSubheader component="div" id={`list-subheader${index}`}>
-					{group.name}
-				</ListSubheader>
-			}
-		>
-			{group.links && getNavLinks(group.links)}
-		</List>
-	));
+  return groups.map((group, index) => (
+    <List
+      key={index}
+      dense
+      component="nav"
+      aria-labelledby={`list-subheader${index}`}
+      subheader={
+        <ListSubheader component="div" id={`list-subheader${index}`}>
+          {group.name}
+        </ListSubheader>
+      }
+    >
+      {group.links && getNavLinks(group.links)}
+    </List>
+  ));
 };
 
 const Sidebar = ({
-	drawerWidth,
-	header: DrawerHeader,
-	open,
-	toggle,
-	groups,
-	onLinkClick,
+  drawerWidth,
+  header: DrawerHeader,
+  open,
+  toggle,
+  groups,
+  onLinkClick,
 }: ISidebarProps) => {
-	const navGroupRenderer = useMemo(() => getRoutes(groups), [groups]);
+  const navGroupRenderer = useMemo(() => getRoutes(groups), [groups]);
 
-	return (
-		<Drawer
-			sx={{
-				width: drawerWidth,
-				flexShrink: 0,
-				"& .MuiDrawer-paper": {
-					width: drawerWidth,
-					boxSizing: "border-box",
-				},
-			}}
-			variant={"persistent"}
-			anchor="left"
-			open={open}
-		>
-			<DrawerHeader>
-				<IconButton onClick={() => toggle(false)}>
-					<ChevronLeft />
-				</IconButton>
-			</DrawerHeader>
-			<Divider />
-			<SidebarContextProvider value={{ onLinkClick }}>
-				{navGroupRenderer}
-			</SidebarContextProvider>
-		</Drawer>
-	);
+  return (
+    <Drawer
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        "& .MuiDrawer-paper": {
+          width: drawerWidth,
+          boxSizing: "border-box",
+        },
+      }}
+      variant={"persistent"}
+      anchor="left"
+      open={open}
+    >
+      <DrawerHeader>
+        <IconButton onClick={() => toggle(false)}>
+          <ChevronLeft />
+        </IconButton>
+      </DrawerHeader>
+      <Divider />
+      <SidebarContextProvider value={{ onLinkClick }}>
+        {navGroupRenderer}
+      </SidebarContextProvider>
+    </Drawer>
+  );
 };
 
 export default React.memo(Sidebar);

@@ -2,7 +2,7 @@ import { CssBaseline } from "@mui/material";
 import {
   createTheme,
   responsiveFontSizes,
-  ThemeProvider as MuiThemeProvider
+  ThemeProvider as MuiThemeProvider,
 } from "@mui/material/styles";
 import React from "react";
 
@@ -18,43 +18,43 @@ const fontFamily = [
   "Fira Sans",
   "Droid Sans",
   "Helvetica Neue",
-  "sans-serif"
+  "sans-serif",
 ].join(",");
 
 let darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#5893df"
+      main: "#5893df",
     },
     secondary: {
-      main: "#2ec5d3"
+      main: "#2ec5d3",
     },
     background: {
       default: "#192231",
-      paper: "#24344d"
-    }
+      paper: "#24344d",
+    },
   },
   typography: {
-    fontFamily
-  }
+    fontFamily,
+  },
 });
 
 darkTheme = responsiveFontSizes(darkTheme);
 
 let lightTheme = createTheme({
   palette: {
-    mode: "light"
+    mode: "light",
   },
   typography: {
-    fontFamily
-  }
+    fontFamily,
+  },
 });
 
 lightTheme = responsiveFontSizes(lightTheme);
 
 export const ColorModeContext = React.createContext({
-  toggleColorMode: () => {}
+  toggleColorMode: () => {},
 });
 
 type ColorModes = "light" | "dark";
@@ -64,8 +64,8 @@ const ThemeProvider: React.FC = ({ children }) => {
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode(prevMode => (prevMode === "light" ? "dark" : "light"));
-      }
+        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+      },
     }),
     []
   );
