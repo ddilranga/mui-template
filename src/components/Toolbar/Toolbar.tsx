@@ -2,6 +2,7 @@ import { MenuOpen as MenuOpenIcon } from "@mui/icons-material";
 import {
   AppBar as MuiAppBar,
   AppBarProps as MuiAppBarProps,
+  Avatar,
   IconButton,
   Stack,
   styled,
@@ -10,6 +11,7 @@ import {
 } from "@mui/material";
 import { memo } from "react";
 import ThemeToggle from "./ThemeToggle";
+import avatar from "assets/images/avatar_placeholder.png";
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -67,11 +69,12 @@ const Toolbar = ({
 
           <Stack
             direction="row"
-            spacing="4"
+            spacing={2}
             alignItems="center"
             justifyContent="flex-end"
           >
             <ThemeToggle />
+            <Avatar src={avatar} sx={{ width: 56, height: 56 }} />
           </Stack>
         </Stack>
       </MuiToolbar>
