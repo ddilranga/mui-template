@@ -10,90 +10,90 @@ import { useNavigate, useRoutes } from "react-router";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
-	open?: boolean;
+  open?: boolean;
 }>(({ theme, open }) => ({
-	flexGrow: 1,
-	padding: theme.spacing(3),
-	transition: theme.transitions.create("margin", {
-		easing: theme.transitions.easing.sharp,
-		duration: theme.transitions.duration.leavingScreen,
-	}),
-	marginLeft: 0,
-	...(open && {
-		transition: theme.transitions.create("margin", {
-			easing: theme.transitions.easing.easeOut,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-		marginLeft: `${drawerWidth}px`,
-	}),
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  transition: theme.transitions.create("margin", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  marginLeft: 0,
+  ...(open && {
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: `${drawerWidth}px`,
+  }),
 }));
 
 const Footer = styled("footer", {
-	shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: (prop) => prop !== "open",
 })<{
-	open?: boolean;
+  open?: boolean;
 }>(({ theme, open }) => ({
-	marginTop: "auto",
-	marginLeft: 0,
-	padding: theme.spacing(3),
-	...(open && {
-		marginLeft: `${drawerWidth}px`,
-	}),
+  marginTop: "auto",
+  marginLeft: 0,
+  padding: theme.spacing(3),
+  ...(open && {
+    marginLeft: `${drawerWidth}px`,
+  }),
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
-	display: "flex",
-	alignItems: "center",
-	padding: theme.spacing(0, 1),
-	// necessary for content to be below app bar
-	...theme.mixins.toolbar,
-	justifyContent: "flex-end",
+  display: "flex",
+  alignItems: "center",
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: "flex-end",
 }));
 
 const UserLayout = () => {
-	const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(true);
 
-	const navigate = useNavigate();
-	const routesRenderer = useRoutes(routes);
+  const navigate = useNavigate();
+  const routesRenderer = useRoutes(routes);
 
-	const onLinkClick: ISidebarProps["onLinkClick"] = useCallback(
-		(event, item) => {
-			event?.preventDefault();
-			item?.url && navigate(item.url);
-		},
-		[]
-	);
+  const onLinkClick: ISidebarProps["onLinkClick"] = useCallback(
+    (event, item) => {
+      event?.preventDefault();
+      item?.url && navigate(item.url);
+    },
+    []
+  );
 
-	const toggleDrawer = useCallback((open: boolean) => {
-		setOpen(open);
-	}, []);
+  const toggleDrawer = useCallback((open: boolean) => {
+    setOpen(open);
+  }, []);
 
-	return (
-		<Box
-			sx={{
-				display: "flex",
-				flexDirection: "column",
-				flexWrap: "wrap",
-				minHeight: "100vh",
-			}}
-		>
-			<Toolbar open={open} toggle={toggleDrawer} />
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        flexWrap: "wrap",
+        minHeight: "100vh",
+      }}
+    >
+      <Toolbar open={open} toggle={toggleDrawer} />
 
-			<Sidebar
-				groups={navigation}
-				drawerWidth={drawerWidth}
-				open={open}
-				toggle={toggleDrawer}
-				header={DrawerHeader}
-				onLinkClick={onLinkClick}
-			/>
-			<Main open={open}>
-				<DrawerHeader />
-				{routesRenderer}
-			</Main>
-			<Footer open={open}>Footer</Footer>
-		</Box>
-	);
+      <Sidebar
+        groups={navigation}
+        drawerWidth={drawerWidth}
+        open={open}
+        toggle={toggleDrawer}
+        header={DrawerHeader}
+        onLinkClick={onLinkClick}
+      />
+      <Main open={open}>
+        <DrawerHeader />
+        {routesRenderer}
+      </Main>
+      <Footer open={open}>Footer</Footer>
+    </Box>
+  );
 };
 
 export default UserLayout;

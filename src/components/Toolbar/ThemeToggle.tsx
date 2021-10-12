@@ -1,6 +1,6 @@
 import {
   DarkMode as MoonIcon,
-  LightMode as SunIcon
+  LightMode as SunIcon,
 } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 import { useTheme } from "@mui/material/styles";
@@ -13,9 +13,10 @@ const ThemeToggle = () => {
 
   return (
     <IconButton
-      sx={{ ml: 1, bgcolor: "background.default", color: "text.primary" }}
+      sx={{ bgcolor: "background.default", color: "text.primary" }}
       onClick={colorMode.toggleColorMode}
       // color="inherit"
+      size="small"
     >
       {theme.palette.mode === "dark" ? <MoonIcon /> : <SunIcon />}
     </IconButton>
