@@ -1,5 +1,13 @@
+import AuthLayout from "layouts/AuthLayout";
 import UserLayout from "layouts/UserLayout";
+import { useAuth } from "views/auth/login/context";
 
-const layout = UserLayout;
+const Layout = () => {
+  const { user } = useAuth();
 
-export default layout;
+  if (user === null) return <AuthLayout />;
+
+  return <UserLayout />;
+};
+
+export default Layout;

@@ -3,9 +3,9 @@ import { Box } from "@mui/system";
 import Sidebar from "components/Sidebar";
 import { ISidebarProps } from "components/Sidebar/Sidebar.types";
 import Toolbar from "components/Toolbar";
-import { navigation, routes } from "configs";
+import { navigation } from "configs";
 import { useCallback, useState } from "react";
-import { useNavigate, useRoutes } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 
 const drawerWidth = 240;
 
@@ -54,7 +54,6 @@ const UserLayout = () => {
   const [open, setOpen] = useState(true);
 
   const navigate = useNavigate();
-  const routesRenderer = useRoutes(routes);
 
   const onLinkClick: ISidebarProps["onLinkClick"] = useCallback(
     (event, item) => {
@@ -89,7 +88,7 @@ const UserLayout = () => {
       />
       <Main open={open}>
         <DrawerHeader />
-        {routesRenderer}
+        <Outlet />
       </Main>
       <Footer open={open}>Footer</Footer>
     </Box>
