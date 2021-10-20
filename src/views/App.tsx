@@ -1,14 +1,11 @@
 import { routes, ThemeProvider } from "configs";
 import { useRoutes } from "react-router-dom";
-import { AuthProvider } from "./auth/login/context";
+import { useAuth } from "./auth/login/context";
 
 function App() {
-  const elements = useRoutes(routes);
-  return (
-    <ThemeProvider>
-      <AuthProvider>{elements}</AuthProvider>
-    </ThemeProvider>
-  );
+  const { user } = useAuth();
+  const elements = useRoutes(routes(Boolean(user)));
+  return <ThemeProvider>{elements}</ThemeProvider>;
 }
 
 export default App;
