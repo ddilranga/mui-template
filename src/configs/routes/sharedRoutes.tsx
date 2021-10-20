@@ -1,4 +1,4 @@
-import { Navigate, RouteObject } from "react-router";
+import { Navigate, RouteObject } from "react-router-dom";
 
 const sharedRoutes: RouteObject[] = [
   {

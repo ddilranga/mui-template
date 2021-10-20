@@ -5,7 +5,7 @@ import { ISidebarProps } from "components/Sidebar/Sidebar.types";
 import Toolbar from "components/Toolbar";
 import { navigation } from "configs";
 import { useCallback, useState } from "react";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 

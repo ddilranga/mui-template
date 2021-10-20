@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import { Outlet } from "react-router";
+import { Outlet } from "react-router-dom";
 
 const AuthLayout = () => {
   return (

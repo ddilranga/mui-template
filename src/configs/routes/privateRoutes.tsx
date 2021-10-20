@@ -1,5 +1,5 @@
 import UserLayout from "layouts/UserLayout";
-import { Navigate, RouteObject } from "react-router";
+import { Navigate, RouteObject } from "react-router-dom";
 import { RequireAuth } from "views/auth/login/context";
 import Dashboard from "views/dashboard/Dashboard";
 
