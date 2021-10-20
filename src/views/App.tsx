@@ -1,14 +1,14 @@
-import { Layout, ThemeProvider } from "configs";
-import { BrowserRouter } from "react-router-dom";
+import { routes, ThemeProvider } from "configs";
+import { useRoutes } from "react-router-dom";
+import { AuthProvider } from "./auth/login/context";
 
 function App() {
-	return (
-		<ThemeProvider>
-			<BrowserRouter>
-				<Layout />
-			</BrowserRouter>
-		</ThemeProvider>
-	);
+  const elements = useRoutes(routes);
+  return (
+    <ThemeProvider>
+      <AuthProvider>{elements}</AuthProvider>
+    </ThemeProvider>
+  );
 }
 
 export default App;
