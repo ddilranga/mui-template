@@ -1,3 +1,5 @@
+import { Card } from "@mui/material";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./context";
 
@@ -8,6 +10,17 @@ export default function LoginPage() {
 
   let state = location.state as { from: Location };
   let from = state ? state.from.pathname : "/";
+
+  useEffect(() => {
+    fetch("/user")
+      .then(async (response) => {
+        if (response.ok) {
+          const result = await response.json();
+          console.log(result);
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -27,7 +40,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div>
+    <Card>
       <p>You must log in to view the page at {from}</p>
 
       <form onSubmit={handleSubmit}>
@@ -36,6 +49,6 @@ export default function LoginPage() {
         </label>{" "}
         <button type="submit">Login</button>
       </form>
-    </div>
+    </Card>
   );
 }
