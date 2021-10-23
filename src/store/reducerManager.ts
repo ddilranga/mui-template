@@ -1,15 +1,9 @@
-import {
-  AnyAction,
-  CombinedState,
-  combineReducers,
-  Reducer,
-} from "@reduxjs/toolkit";
+import { Action, combineReducers, Reducer } from "@reduxjs/toolkit";
+import { FullStoreShape, NamespaceKey, ReducerMap, StoreShape } from "./types";
 
 // reference: https://redux.js.org/usage/code-splitting#using-a-reducer-manager
 
-export function createReducerManager(initialReducers: {
-  [key: string]: Reducer;
-}) {
+export function createReducerManager(initialReducers: ReducerMap) {
   // Create an object which maps keys to reducers
   const reducers = { ...initialReducers };
 
@@ -17,17 +11,14 @@ export function createReducerManager(initialReducers: {
   let combinedReducer = combineReducers(reducers);
 
   // An array which is used to delete state keys when reducers are removed
-  let keysToRemove: string[] = [];
+  let keysToRemove: NamespaceKey[] = [];
 
   return {
     getReducerMap: () => reducers,
 
     // The root reducer function exposed by this object
     // This will be passed to the store
-    reduce: (
-      state: CombinedState<{ [x: string]: any }> | undefined,
-      action: AnyAction
-    ) => {
+    reduce: (state: StoreShape | undefined, action: Action) => {
       // If any reducers have been removed, clean up their state first
       if (keysToRemove.length > 0) {
         state = { ...state };
@@ -38,11 +29,11 @@ export function createReducerManager(initialReducers: {
       }
 
       // Delegate to the combined reducer
-      return combinedReducer(state, action);
+      return combinedReducer(state as FullStoreShape, action) as StoreShape;
     },
 
     // Adds a new reducer with the specified key
-    add: (key: string, reducer: Reducer) => {
+    add: (key: NamespaceKey, reducer: Reducer) => {
       if (!key || reducers[key]) {
         return;
       }
@@ -55,7 +46,7 @@ export function createReducerManager(initialReducers: {
     },
 
     // Removes a reducer with the specified key
-    remove: (key: string) => {
+    remove: (key: NamespaceKey) => {
       if (!key || !reducers[key]) {
         return;
       }

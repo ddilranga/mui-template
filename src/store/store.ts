@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createReducerManager } from "./reducerManager";
+import { ReducerMap } from "./types";
 
 const middlewares: [] = [];
 
-const staticReducers = {};
+const staticReducers: ReducerMap = {};
 
 export const reducerManager = createReducerManager(staticReducers);
 
