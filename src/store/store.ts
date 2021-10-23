@@ -1,10 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { api } from "services/base";
 import { createReducerManager } from "./reducerManager";
 import { ReducerMap } from "./types";
 
-const middlewares: [] = [];
+const middlewares = [api.middleware];
 
-const staticReducers: ReducerMap = {};
+const staticReducers: ReducerMap = {
+  [api.reducerPath]: api.reducer,
+};
 
 export const reducerManager = createReducerManager(staticReducers);
 
