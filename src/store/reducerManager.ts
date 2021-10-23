@@ -1,5 +1,5 @@
 import { Action, combineReducers, Reducer } from "@reduxjs/toolkit";
-import { FullStoreShape, NamespaceKey, ReducerMap, StoreShape } from "./types";
+import { DynamicReducerNames, ReducerMap, StoreShape } from "./types";
 
 // reference: https://redux.js.org/usage/code-splitting#using-a-reducer-manager
 
@@ -11,7 +11,7 @@ export function createReducerManager(initialReducers: ReducerMap) {
   let combinedReducer = combineReducers(reducers);
 
   // An array which is used to delete state keys when reducers are removed
-  let keysToRemove: NamespaceKey[] = [];
+  let keysToRemove: DynamicReducerNames[] = [];
 
   return {
     getReducerMap: () => reducers,
@@ -21,32 +21,32 @@ export function createReducerManager(initialReducers: ReducerMap) {
     reduce: (state: StoreShape | undefined, action: Action) => {
       // If any reducers have been removed, clean up their state first
       if (keysToRemove.length > 0) {
-        state = { ...state };
+        state = state && { ...state };
         for (let key of keysToRemove) {
-          delete state[key];
+          state && delete state[key];
         }
         keysToRemove = [];
       }
 
       // Delegate to the combined reducer
-      return combinedReducer(state as FullStoreShape, action) as StoreShape;
+      return combinedReducer(state, action);
     },
 
     // Adds a new reducer with the specified key
-    add: (key: NamespaceKey, reducer: Reducer) => {
+    add: (key: DynamicReducerNames, reducer: Reducer) => {
       if (!key || reducers[key]) {
         return;
       }
 
       // Add the reducer to the reducer mapping
-      reducers[key] = reducer;
+      reducers[key] = reducers[key] && reducer;
 
       // Generate a new combined reducer
       combinedReducer = combineReducers(reducers);
     },
 
     // Removes a reducer with the specified key
-    remove: (key: NamespaceKey) => {
+    remove: (key: DynamicReducerNames) => {
       if (!key || !reducers[key]) {
         return;
       }

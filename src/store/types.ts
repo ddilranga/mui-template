@@ -1,13 +1,16 @@
-// reference: https://github.com/matthew-gerstman/redux-codesplit-typecheck-example/blob/master/redux-utils/types.ts
-
 import { Reducer } from "redux";
+import { api } from "services/base";
 
-export type FullStoreShape = {};
-
-export type StoreShape = Partial<FullStoreShape>;
-
-export type NamespaceKey = keyof StoreShape;
-
-export type ReducerMap = Partial<{
-  [k in NamespaceKey]: Reducer<FullStoreShape[k]>;
+type StaticReducers = Required<{
+  [api.reducerPath]: any;
 }>;
+
+type DynamicReducers = Partial<{}>;
+
+export type StoreShape = StaticReducers & DynamicReducers;
+
+type StaticReducerNames = keyof StaticReducers;
+export type DynamicReducerNames = keyof DynamicReducers;
+
+export type ReducerMap = Record<StaticReducerNames, Reducer> &
+  Partial<Record<DynamicReducerNames, Reducer>>;
