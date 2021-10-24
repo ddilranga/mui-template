@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { api } from "services/base";
+import { api } from "services/baseApi";
 
 type StaticReducers = Required<{
   [api.reducerPath]: any;
