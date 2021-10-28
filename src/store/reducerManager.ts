@@ -39,7 +39,7 @@ export function createReducerManager(initialReducers: ReducerMap) {
       }
 
       // Add the reducer to the reducer mapping
-      reducers[key] = reducers[key] && reducer;
+      reducers[key] = reducer;
 
       // Generate a new combined reducer
       combinedReducer = combineReducers(reducers);
