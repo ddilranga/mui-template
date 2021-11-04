@@ -1,9 +1,9 @@
 import { Login as LoginIcon } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Paper } from "@mui/material";
+import { useAppDispatch } from "hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "services/auth";
-import { useAppDispatch } from "store";
 import { setCredentials } from "../store";
 
 export default function LoginPage() {
