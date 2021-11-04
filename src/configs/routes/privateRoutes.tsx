@@ -1,7 +1,9 @@
 import UserLayout from "layouts/UserLayout";
+import { lazy } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
 import { RequireAuth } from "utils";
-import Dashboard from "views/dashboard/Dashboard";
+
+const Dashboard = lazy(() => import("views/dashboard/Dashboard"));
 
 const privateRoutes: RouteObject[] = [
   {
