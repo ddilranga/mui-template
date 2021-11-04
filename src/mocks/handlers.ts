@@ -1,7 +1,7 @@
 // src/mocks/handlers.js
 import { nanoid } from "@reduxjs/toolkit";
 import { rest } from "msw";
-import { AuthState } from "views/auth/store/types";
+import { AuthState } from "views/auth/store";
 
 const baseURL = (path: string | URL) => {
   return new URL(`backend/${path}`, "http://localhost:3000").toString();

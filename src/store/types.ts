@@ -1,11 +1,14 @@
 import { Reducer } from "redux";
 import { api } from "services/baseApi";
+import { AUTH_NAME, AuthState } from "views/auth/store";
 
 type StaticReducers = Required<{
   [api.reducerPath]: any;
 }>;
 
-type DynamicReducers = Partial<{}>;
+type DynamicReducers = Partial<{
+  [AUTH_NAME]: AuthState;
+}>;
 
 export type StoreShape = StaticReducers & DynamicReducers;
 
