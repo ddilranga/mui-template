@@ -11,7 +11,6 @@ const AuthLayout = () => {
         minHeight: "100vh",
       }}
     >
-      <div>Login Layout</div>
       <Outlet />
     </Box>
   );
