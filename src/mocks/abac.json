@@ -1,0 +1,52 @@
+[
+  {
+    "role": "admin",
+    "permissions": [
+      {
+        "resource": "ALL",
+        "action": {
+          "ALL": true
+        }
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "permissions": [
+      {
+        "resource": "DASHBOARD",
+        "action": {
+          "VIEW": true,
+          "ADD": false,
+          "EDIT": false,
+          "DELETE": false
+        }
+      }
+    ]
+  },
+  {
+    "role": "custom",
+    "permissions": [
+      {
+        "resource": "DASHBOARD",
+        "action": {
+          "VIEW": true,
+          "ADD": true,
+          "EDIT": true,
+          "DELETE": true
+        }
+      }
+    ]
+  },
+  {
+    "role": "guest",
+    "permissions": [
+      {
+        "resource": "ALL",
+        "action": {
+          "ALL": false
+        }
+      }
+    ]
+  }
+]
