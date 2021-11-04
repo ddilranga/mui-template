@@ -1,54 +1,52 @@
-import { Card } from "@mui/material";
-import { useEffect } from "react";
+import { Login as LoginIcon } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
+import { Paper } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "./context";
+import { useLoginMutation } from "services/auth";
+import { useAppDispatch } from "store";
+import { setCredentials } from "../store";
 
 export default function LoginPage() {
   let navigate = useNavigate();
   let location = useLocation();
-  let auth = useAuth();
+  const dispatch = useAppDispatch();
+
+  const [login, { isLoading }] = useLoginMutation();
 
   let state = location.state as { from: Location };
-  let from = state ? state.from.pathname : "/";
+  let from = state ? state.from.pathname : "/app/dashboard";
 
-  useEffect(() => {
-    fetch("/user")
-      .then(async (response) => {
-        if (response.ok) {
-          const result = await response.json();
-          console.log(result);
-        }
-      })
-      .catch(console.error);
-  }, []);
-
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     let formData = new FormData(event.currentTarget);
     let username = formData.get("username") as string;
 
-    auth.signin(username, () => {
-      // Send them back to the page they tried to visit when they were
-      // redirected to the login page. Use { replace: true } so we don't create
-      // another entry in the history stack for the login page.  This means that
-      // when they get to the protected page and click the back button, they
-      // won't end up back on the login page, which is also really nice for the
-      // user experience.
+    try {
+      const user = await login({ username, password: "demo" }).unwrap();
+      dispatch(setCredentials(user));
       navigate(from, { replace: true });
-    });
+    } catch (err) {
+      //
+    }
   }
 
   return (
-    <Card>
-      <p>You must log in to view the page at {from}</p>
-
+    <Paper>
       <form onSubmit={handleSubmit}>
         <label>
           Username: <input name="username" type="text" />
         </label>{" "}
-        <button type="submit">Login</button>
+        <LoadingButton
+          loading={isLoading}
+          type="submit"
+          color="primary"
+          variant="contained"
+          startIcon={<LoginIcon />}
+        >
+          Login
+        </LoadingButton>
       </form>
-    </Card>
+    </Paper>
   );
 }
