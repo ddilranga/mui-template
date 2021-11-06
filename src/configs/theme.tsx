@@ -1,5 +1,4 @@
 import { CssBaseline } from "@mui/material";
-import { cyan, purple } from "@mui/material/colors";
 import {
   createTheme,
   responsiveFontSizes,
@@ -25,16 +24,16 @@ const fontFamily = [
 let darkTheme = createTheme({
   palette: {
     mode: "dark",
-    primary: {
-      main: "#5893df",
-    },
-    secondary: {
-      main: "#2ec5d3",
-    },
-    background: {
-      default: "#192231",
-      paper: "#24344d",
-    },
+    // primary: {
+    //   main: "#5893df",
+    // },
+    // secondary: {
+    //   main: "#2ec5d3",
+    // },
+    // background: {
+    //   default: "#192231",
+    //   paper: "#24344d",
+    // },
   },
   typography: {
     fontFamily,
@@ -46,8 +45,21 @@ darkTheme = responsiveFontSizes(darkTheme);
 let lightTheme = createTheme({
   palette: {
     mode: "light",
-    primary: purple,
-    secondary: cyan,
+    primary: {
+      main: "#6863F2",
+    },
+    secondary: {
+      main: "#04BFAD",
+    },
+    info: {
+      main: "#B99AD9",
+    },
+    warning: {
+      main: "#F2CB05",
+    },
+    error: {
+      main: "#F24405",
+    },
   },
   typography: {
     fontFamily,
