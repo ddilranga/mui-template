@@ -1,3 +1,4 @@
+import { Container } from "@mui/material";
 import { Box } from "@mui/system";
 import { Outlet } from "react-router-dom";
 
@@ -11,7 +12,21 @@ const AuthLayout = () => {
         minHeight: "100vh",
       }}
     >
+      <Box
+        sx={{
+          m: 4,
+        }}
+      >
+        Auth Toolbar
+      </Box>
       <Outlet />
+      <Box
+        sx={{
+          m: 4,
+        }}
+      >
+        Auth Footer
+      </Box>
     </Box>
   );
 };
