@@ -15,7 +15,7 @@ export const handlers = [
     sessionStorage.setItem("token", token);
 
     return res(
-      ctx.delay(400),
+      ctx.delay(2000),
       ctx.json<AuthState>({
         user: {
           first_name: "Test",
