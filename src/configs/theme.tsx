@@ -24,27 +24,6 @@ const fontFamily = [
 let darkTheme = createTheme({
   palette: {
     mode: "dark",
-    // primary: {
-    //   main: "#5893df",
-    // },
-    // secondary: {
-    //   main: "#2ec5d3",
-    // },
-    // background: {
-    //   default: "#192231",
-    //   paper: "#24344d",
-    // },
-  },
-  typography: {
-    fontFamily,
-  },
-});
-
-darkTheme = responsiveFontSizes(darkTheme);
-
-let lightTheme = createTheme({
-  palette: {
-    mode: "light",
     primary: {
       main: "#6863F2",
     },
@@ -59,6 +38,32 @@ let lightTheme = createTheme({
     },
     error: {
       main: "#F24405",
+    },
+  },
+  typography: {
+    fontFamily,
+  },
+});
+
+darkTheme = responsiveFontSizes(darkTheme);
+
+let lightTheme = createTheme({
+  palette: {
+    mode: "light",
+    secondary: {
+      main: "#3B3740",
+    },
+    primary: {
+      main: "#3E6E8C",
+    },
+    info: {
+      main: "#BBE8F2",
+    },
+    warning: {
+      main: "#F2C185",
+    },
+    error: {
+      main: "#D96666",
     },
   },
   typography: {
