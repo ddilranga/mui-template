@@ -1,3 +1,4 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   AccountCircle,
   Login as LoginIcon,
@@ -19,15 +20,25 @@ import {
   InputAdornment,
   Link,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import avatarImg from "assets/images/undraw_male_avatar.svg";
+import personalInfoSvg from "assets/images/undraw_personal_info.svg";
+import { ControlledTextField } from "components/FormControls";
 import { useAppDispatch } from "hooks";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "services/auth";
+import { z } from "zod";
 import { setCredentials } from "../store";
+
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
+type FormValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   let navigate = useNavigate();
@@ -36,25 +47,44 @@ export default function LoginPage() {
 
   const [login, { isLoading }] = useLoginMutation();
 
+  const { handleSubmit, control } = useForm<FormValues>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    reValidateMode: "onSubmit",
+    mode: "all",
+    resolver: zodResolver(loginSchema),
+  });
+
   const [showPassword, setShowPassword] = useState(false);
 
   let state = location.state as { from: Location };
   let from = state ? state.from.pathname : "/app/dashboard";
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    let formData = new FormData(event.currentTarget);
-    let username = formData.get("username") as string;
+    handleSubmit(
+      async (data) => {
+        try {
+          const user = await login({
+            username: data.email,
+            password: data.password,
+          }).unwrap();
 
-    try {
-      const user = await login({ username, password: "demo" }).unwrap();
-      dispatch(setCredentials(user));
-      navigate(from, { replace: true });
-    } catch (err) {
-      //
-    }
-  }
+          dispatch(setCredentials(user));
+
+          navigate(from, { replace: true });
+        } catch (err) {
+          //
+        }
+      },
+      (err) => {
+        //
+      }
+    )();
+  };
 
   return (
     <Container>
@@ -64,11 +94,11 @@ export default function LoginPage() {
           xs={false}
           md={8}
           sx={{
-            backgroundImage: `url(${avatarImg})`,
+            backgroundImage: `url(${personalInfoSvg})`,
             backgroundRepeat: "no-repeat",
 
             backgroundSize: "cover",
-            backgroundPosition: "center",
+            backgroundPosition: "right",
           }}
         />
         <Grid item xs={12} md={4}>
@@ -80,7 +110,7 @@ export default function LoginPage() {
               }}
               noValidate
               autoComplete="off"
-              onSubmit={handleSubmit}
+              onSubmit={onSubmit}
             >
               <Stack alignItems="center" mt={4}>
                 <Avatar src={avatarImg} sx={{ m: 1 }} />
@@ -90,11 +120,13 @@ export default function LoginPage() {
               </Stack>
               <CardContent>
                 <Stack alignItems="flex-start" justifyContent="center">
-                  <TextField
+                  <ControlledTextField
                     fullWidth
                     id="login-email"
-                    type="email"
+                    name={"email"}
                     label="Email"
+                    type="email"
+                    control={control}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -104,11 +136,13 @@ export default function LoginPage() {
                     }}
                   />
 
-                  <TextField
+                  <ControlledTextField
                     fullWidth
                     id="login-password"
+                    name="password"
                     label="Password"
                     type="password"
+                    control={control}
                     autoComplete="current-password"
                     InputProps={{
                       endAdornment: (
@@ -126,6 +160,7 @@ export default function LoginPage() {
                       ),
                     }}
                   />
+
                   <Grid
                     container
                     alignItems="center"

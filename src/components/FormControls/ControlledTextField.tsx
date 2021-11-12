@@ -2,7 +2,7 @@ import { TextField, TextFieldProps } from "@mui/material";
 import { Control, Controller } from "react-hook-form";
 
 type ControlledTextFieldProps = {
-  name: any;
+  name: string;
   control: Control<any>;
 } & TextFieldProps;
 
