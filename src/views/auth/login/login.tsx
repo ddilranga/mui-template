@@ -1,4 +1,4 @@
-import { zodResolver } from "@hookform/resolvers/zod";
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   AccountCircle,
   Login as LoginIcon,
@@ -30,15 +30,15 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "services/auth";
-import { z } from "zod";
+import * as yup from "yup";
 import { setCredentials } from "../store";
 
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
+const loginSchema = yup.object({
+  email: yup.string().required().email(),
+  password: yup.string().required().min(8),
 });
 
-type FormValues = z.infer<typeof loginSchema>;
+type FormValues = yup.InferType<typeof loginSchema>;
 
 export default function LoginPage() {
   let navigate = useNavigate();
@@ -54,7 +54,7 @@ export default function LoginPage() {
     },
     reValidateMode: "onSubmit",
     mode: "all",
-    resolver: zodResolver(loginSchema),
+    resolver: yupResolver(loginSchema),
   });
 
   const [showPassword, setShowPassword] = useState(false);
