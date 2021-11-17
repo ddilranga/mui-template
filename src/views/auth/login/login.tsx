@@ -120,13 +120,13 @@ export default function LoginPage() {
               </Stack>
               <CardContent>
                 <Stack alignItems="flex-start" justifyContent="center">
-                  <ControlledTextField
-                    fullWidth
+                  <ControlledTextField<FormValues>
+                    control={control}
+                    name="email"
                     id="login-email"
-                    name={"email"}
                     label="Email"
                     type="email"
-                    control={control}
+                    fullWidth
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -136,14 +136,14 @@ export default function LoginPage() {
                     }}
                   />
 
-                  <ControlledTextField
-                    fullWidth
-                    id="login-password"
+                  <ControlledTextField<FormValues>
+                    control={control}
                     name="password"
+                    id="login-password"
                     label="Password"
                     type="password"
-                    control={control}
                     autoComplete="current-password"
+                    fullWidth
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
