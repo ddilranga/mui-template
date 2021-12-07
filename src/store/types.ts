@@ -4,11 +4,10 @@ import { AUTH_NAME, AuthState } from "views/auth/store";
 
 type StaticReducers = Required<{
   [api.reducerPath]: any;
-}>;
-
-type DynamicReducers = Partial<{
   [AUTH_NAME]: AuthState;
 }>;
+
+type DynamicReducers = Partial<{}>;
 
 export type StoreShape = StaticReducers & DynamicReducers;
 
