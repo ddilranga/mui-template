@@ -1,22 +1,18 @@
 // src/mocks/handlers.js
-import { nanoid } from "@reduxjs/toolkit";
 import { rest } from "msw";
-import { AuthState } from "views/auth/store";
 
 const baseURL = (path: string | URL) => {
   return new URL(`backend/${path}`, "http://localhost:3000").toString();
 };
 
-const token = nanoid();
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlciI6eyJmaXJzdF9uYW1lIjoiSm9obiIsImxhc3RfbmFtZSI6IkRvZSJ9LCJpYXQiOjE1MTYyMzkwMjIsImV4cCI6MTY3MDA4Njc4OX0.r67XbgSWvAR7aSqkaNkgEzaQb1T-qqS6UTW22WDPDaE";
 
 export const handlers = [
   rest.post(baseURL("login"), (req, res, ctx) => {
-    // Persist user's authentication in the session
-    sessionStorage.setItem("token", token);
-
     return res(
       ctx.delay(2000),
-      ctx.json<AuthState>({
+      ctx.json({
         user: {
           first_name: "Test",
           last_name: "User",
