@@ -12,9 +12,7 @@ import {
   Card,
   CardActions,
   CardContent,
-  Checkbox,
   Container,
-  FormControlLabel,
   Grid,
   IconButton,
   InputAdornment,
@@ -24,7 +22,10 @@ import {
 } from "@mui/material";
 import avatarImg from "assets/images/undraw_male_avatar.svg";
 import personalInfoSvg from "assets/images/undraw_personal_info.svg";
-import { ControlledTextField } from "components/FormControls";
+import {
+  ControlledCheckbox,
+  ControlledTextField,
+} from "components/FormControls";
 import { useAppDispatch } from "hooks";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -34,11 +35,14 @@ import * as yup from "yup";
 import { setCredentials } from "../store";
 
 const loginSchema = yup.object({
-  email: yup.string().required().email(),
-  password: yup.string().required().min(8),
+  email: yup.string().required().email().default(""),
+  password: yup.string().required().min(8).default(""),
+  rememberMe: yup.bool().required().default(false),
 });
 
 type FormValues = yup.InferType<typeof loginSchema>;
+
+const defaultValues = loginSchema.cast({});
 
 export default function LoginPage() {
   let navigate = useNavigate();
@@ -48,10 +52,7 @@ export default function LoginPage() {
   const [login, { isLoading }] = useLoginMutation();
 
   const { handleSubmit, control } = useForm<FormValues>({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues,
     reValidateMode: "onSubmit",
     mode: "all",
     resolver: yupResolver(loginSchema),
@@ -68,12 +69,12 @@ export default function LoginPage() {
     handleSubmit(
       async (data) => {
         try {
-          const user = await login({
+          const { user, token } = await login({
             username: data.email,
             password: data.password,
           }).unwrap();
 
-          dispatch(setCredentials(user));
+          dispatch(setCredentials({ user, token }, data.rememberMe));
 
           navigate(from, { replace: true });
         } catch (err) {
@@ -160,26 +161,27 @@ export default function LoginPage() {
                       ),
                     }}
                   />
+                </Stack>
 
-                  <Grid
-                    container
-                    alignItems="center"
-                    justifyContent="space-between"
-                  >
-                    <Grid item xs="auto">
-                      <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label={
-                          <Typography variant="body1">Remember me</Typography>
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={false}>
-                      <Link href="#" variant="body2">
-                        Forgot password?
-                      </Link>
-                    </Grid>
-                  </Grid>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  sx={{ my: 2 }}
+                >
+                  <ControlledCheckbox<FormValues>
+                    control={control}
+                    name="rememberMe"
+                    labelProps={{
+                      label: (
+                        <Typography variant="body1">Remember me</Typography>
+                      ),
+                    }}
+                  />
+
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
                 </Stack>
               </CardContent>
 
