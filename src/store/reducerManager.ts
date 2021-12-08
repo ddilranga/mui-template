@@ -1,4 +1,5 @@
 import { Action, combineReducers, Reducer } from "@reduxjs/toolkit";
+import { logout } from "views/auth/store";
 import { DynamicReducerNames, ReducerMap, StoreShape } from "./types";
 
 // reference: https://redux.js.org/usage/code-splitting#using-a-reducer-manager
@@ -26,6 +27,10 @@ export function createReducerManager(initialReducers: ReducerMap) {
           state && delete state[key];
         }
         keysToRemove = [];
+      }
+
+      if (action.type === logout.type) {
+        state = undefined;
       }
 
       // Delegate to the combined reducer

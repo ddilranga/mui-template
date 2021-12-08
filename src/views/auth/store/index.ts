@@ -5,33 +5,42 @@ import { RootState } from "store";
 export type AuthState = {
   user: User | null;
   token: string | null;
-  rememberMe: boolean | null;
 };
 
 export const AUTH_NAME = "auth";
 
+const initialState: AuthState = {
+  user: null,
+  token: null,
+};
+
 const slice = createSlice({
   name: AUTH_NAME,
-  initialState: { user: null, token: null, rememberMe: false } as AuthState,
+  initialState,
   reducers: {
-    setCredentials: (
-      state,
-      {
-        payload: { user, token, rememberMe },
-      }: PayloadAction<{
-        user: User;
-        token: string;
-        rememberMe: boolean | null;
-      }>
-    ) => {
-      state.user = user;
-      state.token = token;
-      state.rememberMe = rememberMe;
+    setCredentials: {
+      reducer(state, action: PayloadAction<AuthState>) {
+        const {
+          payload: { user, token },
+        } = action;
+        state.user = user;
+        state.token = token;
+      },
+      prepare(payload: AuthState, rememberMe: boolean) {
+        return {
+          payload,
+          meta: {
+            rememberMe,
+          },
+        };
+      },
     },
+
+    logout: () => {},
   },
 });
 
-export const { setCredentials } = slice.actions;
+export const { setCredentials, logout } = slice.actions;
 
 export default slice.reducer;
 
