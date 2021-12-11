@@ -20,19 +20,18 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import authenticationSvg from "assets/images/Authentication_Isometric.svg";
 import avatarImg from "assets/images/undraw_male_avatar.svg";
-import personalInfoSvg from "assets/images/undraw_personal_info.svg";
 import {
   ControlledCheckbox,
   ControlledTextField,
 } from "components/FormControls";
-import { useAppDispatch } from "hooks";
+import { useAuth } from "hooks";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useLoginMutation } from "services/auth";
 import * as yup from "yup";
-import { setCredentials } from "../store";
 
 const loginSchema = yup.object({
   email: yup.string().required().email().default(""),
@@ -45,23 +44,17 @@ type FormValues = yup.InferType<typeof loginSchema>;
 const defaultValues = loginSchema.cast({});
 
 export default function LoginPage() {
-  let navigate = useNavigate();
-  let location = useLocation();
-  const dispatch = useAppDispatch();
+  const { login } = useAuth();
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [loginReq, { isLoading }] = useLoginMutation();
 
   const { handleSubmit, control } = useForm<FormValues>({
     defaultValues,
-    reValidateMode: "onSubmit",
-    mode: "all",
+    mode: "onChange",
     resolver: yupResolver(loginSchema),
   });
 
   const [showPassword, setShowPassword] = useState(false);
-
-  let state = location.state as { from: Location };
-  let from = state ? state.from.pathname : "/app/dashboard";
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -69,19 +62,17 @@ export default function LoginPage() {
     handleSubmit(
       async (data) => {
         try {
-          const { user, token } = await login({
+          const { user, token } = await loginReq({
             username: data.email,
             password: data.password,
           }).unwrap();
 
-          dispatch(setCredentials({ user, token }, data.rememberMe));
-
-          navigate(from, { replace: true });
+          login(user, token, data.rememberMe);
         } catch (err) {
           //
         }
       },
-      (err) => {
+      () => {
         //
       }
     )();
@@ -95,9 +86,9 @@ export default function LoginPage() {
           xs={false}
           md={8}
           sx={{
-            backgroundImage: `url(${personalInfoSvg})`,
+            backgroundImage: `url(${authenticationSvg})`,
             backgroundRepeat: "no-repeat",
-
+            bgcolor: "#6863F2",
             backgroundSize: "cover",
             backgroundPosition: "right",
           }}
