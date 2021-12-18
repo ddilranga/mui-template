@@ -13,9 +13,11 @@
     "@mui/icons-material": "^5.2.1",
     "@mui/lab": "5.0.0-alpha.59",
     "@mui/material": "^5.2.3",
+    "@react-three/fiber": "^7.0.24",
     "@reduxjs/toolkit": "^1.7.0",
     "@rtk-incubator/action-listener-middleware": "^0.4.0",
     "clsx": "^1.1.1",
+    "framer-motion": "^5.5.3",
     "history": "^5.1.0",
     "jwt-decode": "^3.1.2",
     "react": "^17.0.2",
@@ -23,6 +25,7 @@
     "react-hook-form": "^7.21.2",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.1.0",
+    "three": "^0.135.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
