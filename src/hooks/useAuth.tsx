@@ -32,9 +32,10 @@ export default function useAuth() {
 
       const currentTime = Date.now() / 1000;
 
-      const isTokenExpired = decodedToken.exp && decodedToken.exp > currentTime;
+      const isTokenExpired = decodedToken.exp && decodedToken.exp < currentTime;
 
       if (isTokenExpired) {
+        // TODO: dispatch a notification saying the token is expired and login again
         logout();
       } else {
         login(decodedToken.user, token, rememberMe);
