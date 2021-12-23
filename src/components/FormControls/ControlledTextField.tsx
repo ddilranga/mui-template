@@ -3,9 +3,7 @@ import { useController, UseControllerProps } from "react-hook-form";
 
 type ControlledTextFieldProps<T> = UseControllerProps<T> & TextFieldProps;
 
-const ControlledTextField = <T extends {}>(
-  props: ControlledTextFieldProps<T>
-) => {
+function ControlledTextField<T>(props: ControlledTextFieldProps<T>) {
   const {
     field: { name, onChange, onBlur, ref, value },
     fieldState: { error },
@@ -23,6 +21,6 @@ const ControlledTextField = <T extends {}>(
       ref={ref}
     />
   );
-};
+}
 
 export default ControlledTextField;

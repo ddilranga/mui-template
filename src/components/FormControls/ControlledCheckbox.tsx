@@ -12,11 +12,9 @@ type ControlledCheckboxProps<T> = {
 } & UseControllerProps<T> &
   CheckboxProps;
 
-const ControlledCheckbox = <T extends {}>(
-  props: ControlledCheckboxProps<T>
-) => {
+function ControlledCheckbox<T>(props: ControlledCheckboxProps<T>) {
   const {
-    field,
+    field: { value, onChange },
     fieldState: { error },
   } = useController(props);
 
@@ -26,14 +24,14 @@ const ControlledCheckbox = <T extends {}>(
         {...props.labelProps}
         control={
           <Checkbox
-            checked={field.value}
-            onChange={(e) => field.onChange(e.target.checked)}
+            checked={value}
+            onChange={(e) => onChange(e.target.checked)}
           />
         }
       />
       <FormHelperText error={!!error}>{error && error.message}</FormHelperText>
     </>
   );
-};
+}
 
 export default ControlledCheckbox;
