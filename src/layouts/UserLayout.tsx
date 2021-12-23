@@ -60,7 +60,7 @@ const UserLayout = () => {
       event?.preventDefault();
       item?.url && navigate(item.url);
     },
-    []
+    [navigate]
   );
 
   const toggleDrawer = useCallback((open: boolean) => {

@@ -29,7 +29,6 @@ import {
 import { useAuth } from "hooks";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
 import { useLoginMutation } from "services/auth";
 import * as yup from "yup";
 
