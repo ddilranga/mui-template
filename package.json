@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "lint": "eslint src/**",
+    "lint:fix": "eslint --fix src/**"
   },
   "dependencies": {
     "@emotion/react": "^11.7.0",
