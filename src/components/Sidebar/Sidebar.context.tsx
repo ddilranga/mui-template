@@ -1,9 +1,12 @@
 import { createContext, ReactNode, useContext, useMemo } from "react";
 import { ISidebarProps } from "./Sidebar.types";
 
-const SidebarContext = createContext<{
-  onLinkClick: ISidebarProps["onLinkClick"];
-}>({ onLinkClick: () => {} });
+const SidebarContext = createContext<
+  | {
+      onLinkClick: ISidebarProps["onLinkClick"];
+    }
+  | undefined
+>(undefined);
 
 function useSidebarContext() {
   const context = useContext(SidebarContext);

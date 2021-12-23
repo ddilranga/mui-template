@@ -73,9 +73,12 @@ let lightTheme = createTheme({
 
 lightTheme = responsiveFontSizes(lightTheme);
 
-export const ColorModeContext = React.createContext({
-  toggleColorMode: () => {},
-});
+export const ColorModeContext = React.createContext<
+  | {
+      toggleColorMode: () => void;
+    }
+  | undefined
+>(undefined);
 
 type ColorModes = "light" | "dark";
 
