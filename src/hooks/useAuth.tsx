@@ -1,6 +1,5 @@
 import jwtDecode, { JwtPayload } from "jwt-decode";
 import { useCallback, useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { User } from "services/auth";
 import {
   logout as storeLogout,
@@ -12,10 +11,33 @@ import { useAppDispatch, useAppSelector } from "./store";
 export default function useAuth() {
   const dispatch = useAppDispatch();
 
-  const location = useLocation();
-  const navigate = useNavigate();
-
   const user = useAppSelector(selectCurrentUser);
+
+  const login = useCallback(
+    (user: User, token: string, rememberMe: boolean) => {
+      dispatch(
+        setCredentials(
+          {
+            user,
+            token,
+          },
+          rememberMe
+        )
+      );
+
+      const storageEngine = rememberMe ? "localStorage" : "sessionStorage";
+
+      window[`${storageEngine}`].setItem("token", token);
+    },
+    [dispatch]
+  );
+
+  const logout = useCallback(() => {
+    dispatch(storeLogout());
+
+    localStorage.clear();
+    sessionStorage.clear();
+  }, [dispatch]);
 
   const autoLogin = useCallback(() => {
     const localToken = localStorage.getItem("token");
@@ -37,42 +59,18 @@ export default function useAuth() {
       if (isTokenExpired) {
         // TODO: dispatch a notification saying the token is expired and login again
         logout();
+
+        return false;
       } else {
         login(decodedToken.user, token, rememberMe);
+
+        return true;
       }
     }
-  }, []);
+  }, [login, logout]);
 
-  const login = useCallback(
-    (user: User, token: string, rememberMe: boolean) => {
-      dispatch(
-        setCredentials(
-          {
-            user,
-            token,
-          },
-          rememberMe
-        )
-      );
-
-      const storageEngine = rememberMe ? "localStorage" : "sessionStorage";
-
-      window[`${storageEngine}`].setItem("token", token);
-
-      const state = location.state as { from: Location };
-      const from = state ? state.from.pathname : "/app/dashboard";
-
-      navigate(from, { replace: true });
-    },
-    []
+  return useMemo(
+    () => ({ user, login, autoLogin, logout }),
+    [autoLogin, login, logout, user]
   );
-
-  const logout = useCallback(() => {
-    dispatch(storeLogout());
-
-    localStorage.clear();
-    sessionStorage.clear();
-  }, []);
-
-  return useMemo(() => ({ user, login, autoLogin, logout }), [user]);
 }

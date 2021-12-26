@@ -29,6 +29,7 @@ import {
 import { useAuth } from "hooks";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "services/auth";
 import * as yup from "yup";
 
@@ -44,6 +45,8 @@ const defaultValues = loginSchema.cast({});
 
 export default function LoginPage() {
   const { login } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [loginReq, { isLoading }] = useLoginMutation();
 
@@ -67,6 +70,11 @@ export default function LoginPage() {
           }).unwrap();
 
           login(user, token, data.rememberMe);
+
+          const state = location.state as { from: Location };
+          const from = state ? state.from.pathname : "/app/dashboard";
+
+          navigate(from, { replace: true });
         } catch (err) {
           //
         }
