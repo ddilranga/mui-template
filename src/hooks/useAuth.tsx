@@ -1,5 +1,5 @@
 import jwtDecode, { JwtPayload } from "jwt-decode";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { User } from "services/auth";
 import {
   logout as storeLogout,
@@ -8,13 +8,25 @@ import {
 } from "views/auth/store";
 import { useAppDispatch, useAppSelector } from "./store";
 
+export enum AuthStatus {
+  Authenticating,
+  Authed,
+  NotAuthed,
+}
+
 export default function useAuth() {
+  const [authStatus, setAuthStatus] = useState<AuthStatus>(
+    AuthStatus.Authenticating
+  );
+
   const dispatch = useAppDispatch();
 
   const user = useAppSelector(selectCurrentUser);
 
   const login = useCallback(
     (user: User, token: string, rememberMe: boolean) => {
+      setAuthStatus(AuthStatus.Authed);
+
       dispatch(
         setCredentials(
           {
@@ -33,6 +45,8 @@ export default function useAuth() {
   );
 
   const logout = useCallback(() => {
+    setAuthStatus(AuthStatus.NotAuthed);
+
     dispatch(storeLogout());
 
     localStorage.clear();
@@ -40,6 +54,8 @@ export default function useAuth() {
   }, [dispatch]);
 
   const autoLogin = useCallback(() => {
+    setAuthStatus(AuthStatus.Authenticating);
+
     const localToken = localStorage.getItem("token");
     const sessionToken = sessionStorage.getItem("token");
 
@@ -66,11 +82,13 @@ export default function useAuth() {
 
         return true;
       }
+    } else {
+      setAuthStatus(AuthStatus.NotAuthed);
     }
   }, [login, logout]);
 
   return useMemo(
-    () => ({ user, login, autoLogin, logout }),
-    [autoLogin, login, logout, user]
+    () => ({ user, login, autoLogin, logout, authStatus }),
+    [autoLogin, login, logout, user, authStatus]
   );
 }

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { store } from "store";
-import App from "./views/App";
+import { App } from "views";
 
 if (import.meta.env.DEV) {
   const { worker } = await import("./mocks/browser");
