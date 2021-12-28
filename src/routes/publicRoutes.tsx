@@ -1,6 +1,6 @@
 import AuthLayout from "layouts/AuthLayout";
 import { Navigate, RouteObject } from "react-router-dom";
-import LoginPage from "views/auth/Login/Login";
+import { LoginPage } from "views";
 
 const publicRoutes: RouteObject[] = [
   {
