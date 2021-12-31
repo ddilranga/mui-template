@@ -1,10 +1,12 @@
 import { styled } from "@mui/material";
 import { Box } from "@mui/system";
+import SuspenseErrorFallback from "components/SplashScreens/SuspenseErrorFallback";
 import Sidebar from "components/Sidebar";
 import { ISidebarProps } from "components/Sidebar/Sidebar.types";
 import Toolbar from "components/Toolbar";
 import { navigation } from "configs";
 import { Suspense, useCallback, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { Outlet, useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -88,9 +90,11 @@ const UserLayout = () => {
       />
       <Main open={open}>
         <DrawerHeader />
-        <Suspense fallback={<>loading...</>}>
-          <Outlet />
-        </Suspense>
+        <ErrorBoundary FallbackComponent={SuspenseErrorFallback}>
+          <Suspense fallback={<>loading...</>}>
+            <Outlet />
+          </Suspense>
+        </ErrorBoundary>
       </Main>
       <Footer open={open}>Footer</Footer>
     </Box>

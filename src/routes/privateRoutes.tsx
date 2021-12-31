@@ -4,6 +4,12 @@ import { Navigate, RouteObject } from "react-router-dom";
 import { RequireAuth } from "utils";
 
 const Dashboard = lazy(() => import("views/Dashboard/Dashboard"));
+// to test suspense fallback and suspense error fallback, uncomment the following code
+// const Dashboard = lazy(() => {
+//   return new Promise((resolve) => setTimeout(resolve, 1000)).then(
+//     () => import("views/Dashboard/")
+//   );
+// });
 
 const privateRoutes: RouteObject[] = [
   {
