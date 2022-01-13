@@ -1,6 +1,8 @@
-import { styled } from "@mui/material";
+import { KeyboardArrowUp as KeyboardArrowUpIcon } from "@mui/icons-material";
+import { Fab, styled, Toolbar as MuiToolbar } from "@mui/material";
 import { Box } from "@mui/system";
 import { SuspenseErrorFallback } from "components/Fallbacks";
+import ScrollToTop from "components/ScrollToTop";
 import Sidebar from "components/Sidebar";
 import { ISidebarProps } from "components/Sidebar/Sidebar.types";
 import Toolbar from "components/Toolbar";
@@ -79,6 +81,7 @@ const UserLayout = () => {
       }}
     >
       <Toolbar open={open} toggle={toggleDrawer} />
+      <MuiToolbar id="back-to-top-anchor" />
 
       <Sidebar
         groups={navigation}
@@ -96,6 +99,13 @@ const UserLayout = () => {
           </Suspense>
         </ErrorBoundary>
       </Main>
+
+      <ScrollToTop target="#back-to-top-anchor">
+        <Fab color="secondary" size="small" aria-label="scroll back to top">
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </ScrollToTop>
+
       <Footer open={open}>Footer</Footer>
     </Box>
   );
