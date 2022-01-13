@@ -1,14 +1,15 @@
-import { routes, ThemeProvider } from "configs";
+import { routes } from "configs";
 import { useRoutes } from "react-router-dom";
 import AuthWrapper from "./AuthWrapper";
+import ThemeWrapper from "./ThemeWrapper";
 
 function App() {
   const elements = useRoutes(routes);
 
   return (
-    <ThemeProvider>
+    <ThemeWrapper>
       <AuthWrapper>{elements}</AuthWrapper>
-    </ThemeProvider>
+    </ThemeWrapper>
   );
 }
 

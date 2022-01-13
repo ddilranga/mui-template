@@ -2,23 +2,28 @@ import {
   DarkMode as MoonIcon,
   LightMode as SunIcon,
 } from "@mui/icons-material";
-import IconButton from "@mui/material/IconButton";
-import { useTheme } from "@mui/material/styles";
-import { ColorModeContext } from "configs";
-import React from "react";
+import { IconButton, PaletteMode } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "hooks";
+import { selectThemeMode, setThemePaletteOptions } from "themes/store";
 
 const ThemeToggle = () => {
-  const theme = useTheme();
-  const colorMode = React.useContext(ColorModeContext);
+  const dispatch = useAppDispatch();
+
+  const themeMode = useAppSelector(selectThemeMode);
+
+  const setThemeMode = () => {
+    const mode: PaletteMode = themeMode === "light" ? "dark" : "light";
+
+    dispatch(setThemePaletteOptions({ mode }));
+  };
 
   return (
     <IconButton
       sx={{ bgcolor: "background.default", color: "text.primary" }}
-      onClick={colorMode.toggleColorMode}
-      // color="inherit"
+      onClick={setThemeMode}
       size="small"
     >
-      {theme.palette.mode === "dark" ? <MoonIcon /> : <SunIcon />}
+      {themeMode === "dark" ? <MoonIcon /> : <SunIcon />}
     </IconButton>
   );
 };

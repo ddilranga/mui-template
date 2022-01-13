@@ -7,15 +7,13 @@ export type AuthState = {
   token: string | null;
 };
 
-export const AUTH_NAME = "auth";
-
 const initialState: AuthState = {
   user: null,
   token: null,
 };
 
 const slice = createSlice({
-  name: AUTH_NAME,
+  name: "auth",
   initialState,
   reducers: {
     setCredentials: {
@@ -36,12 +34,13 @@ const slice = createSlice({
       },
     },
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     logout: () => {},
   },
 });
 
 export const { setCredentials, logout } = slice.actions;
 
-export default slice.reducer;
+export default { name: slice.name, reducer: slice.reducer };
 
 export const selectCurrentUser = (state: RootState) => state.auth?.user;

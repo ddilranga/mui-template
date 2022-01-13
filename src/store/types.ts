@@ -1,11 +1,14 @@
 import { Reducer } from "redux";
 import { api } from "services/baseApi";
-import { AUTH_NAME, AuthState } from "views/auth/store";
+import { themeState } from "themes";
+import { ThemeStoreShape } from "themes/store";
+import auth, { AuthState } from "views/Auth/store";
 
 type StaticReducers = Required<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [api.reducerPath]: any;
-  [AUTH_NAME]: AuthState;
+  [auth.name]: AuthState;
+  [themeState.name]: ThemeStoreShape;
 }>;
 
 type DynamicReducers = Partial<unknown>;

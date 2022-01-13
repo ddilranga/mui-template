@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { api } from "services/baseApi";
-import authReducer, { AUTH_NAME } from "views/auth/store";
+import { themeState } from "themes";
+import authState from "views/Auth/store";
 import { listenerMiddleware } from "./listeners";
 import { createReducerManager } from "./reducerManager";
 
@@ -8,7 +9,8 @@ const middlewares = [api.middleware, listenerMiddleware];
 
 const staticReducers = {
   [api.reducerPath]: api.reducer,
-  [AUTH_NAME]: authReducer,
+  [authState.name]: authState.reducer,
+  [themeState.name]: themeState.reducer,
 };
 
 export const reducerManager = createReducerManager(staticReducers);
