@@ -1,15 +1,21 @@
-import { routes } from "configs";
-import { useRoutes } from "react-router-dom";
+import { Provider as ReduxProvider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import { store } from "store";
 import AuthWrapper from "./AuthWrapper";
+import RoutesHolder from "./RoutesHolder";
 import ThemeWrapper from "./ThemeWrapper";
 
 function App() {
-  const elements = useRoutes(routes);
-
   return (
-    <ThemeWrapper>
-      <AuthWrapper>{elements}</AuthWrapper>
-    </ThemeWrapper>
+    <BrowserRouter>
+      <ReduxProvider store={store}>
+        <ThemeWrapper>
+          <AuthWrapper>
+            <RoutesHolder />
+          </AuthWrapper>
+        </ThemeWrapper>
+      </ReduxProvider>
+    </BrowserRouter>
   );
 }
 
