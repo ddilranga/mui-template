@@ -9,20 +9,18 @@ const SuspenseErrorFallback = ({ error }: FallbackProps) => {
       <Box component="p" typography={"h4"} textAlign={"center"}>
         Something went wrong:
       </Box>
+      <Box component="img" src={InjuredSvg} maxHeight={"50vh"} />
       <Box
-        component="img"
-        src={InjuredSvg}
-        // maxWidth={"25rem"}
-        maxHeight={"50vh"}
-      />
-      <Box component="code" sx={{ typography: "subtitle1", my: 2 }}>
+        component="p"
+        sx={{ typography: "subtitle1", my: 2 }}
+        textAlign={"center"}
+      >
         {error.message}
       </Box>
       <Stack alignItems={"center"}>
         <Button
           onClick={() => {
             window.location.reload();
-            // resetErrorBoundary();
           }}
         >
           Reload the page
