@@ -1,6 +1,6 @@
 import { styled } from "@mui/material";
 import { Box } from "@mui/system";
-import SuspenseErrorFallback from "components/SplashScreens/SuspenseErrorFallback";
+import { SuspenseErrorFallback } from "components/Fallbacks";
 import Sidebar from "components/Sidebar";
 import { ISidebarProps } from "components/Sidebar/Sidebar.types";
 import Toolbar from "components/Toolbar";
