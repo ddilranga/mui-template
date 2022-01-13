@@ -1,4 +1,4 @@
-import AuthLayout from "layouts/AuthLayout";
+import { AuthLayout } from "layouts";
 import { Navigate, RouteObject } from "react-router-dom";
 import LoginPage from "views/Auth/Login";
 

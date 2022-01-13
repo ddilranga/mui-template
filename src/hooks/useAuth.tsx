@@ -5,7 +5,7 @@ import {
   logout as storeLogout,
   selectCurrentUser,
   setCredentials,
-} from "views/auth/store";
+} from "views/Auth/store";
 import { useAppDispatch, useAppSelector } from "./store";
 
 export enum AuthStatus {

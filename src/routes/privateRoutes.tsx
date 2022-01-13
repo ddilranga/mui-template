@@ -1,9 +1,9 @@
-import UserLayout from "layouts/UserLayout";
+import { UserLayout } from "layouts";
 import { lazy } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
 import { RequireAuth } from "utils";
 
-const Dashboard = lazy(() => import("views/Dashboard/Dashboard"));
+const Dashboard = lazy(() => import("views/Dashboard"));
 // to test suspense fallback and suspense error fallback, uncomment the following code
 // const Dashboard = lazy(() => {
 //   return new Promise((resolve) => setTimeout(resolve, 1000)).then(

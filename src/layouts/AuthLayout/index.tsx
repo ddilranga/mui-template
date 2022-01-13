@@ -1,5 +1,7 @@
 import { Box } from "@mui/system";
 import { Outlet } from "react-router-dom";
+import Footer from "./components/Footer";
+import Toolbar from "./components/Toolbar";
 
 const AuthLayout = () => {
   return (
@@ -16,7 +18,7 @@ const AuthLayout = () => {
           m: 4,
         }}
       >
-        Auth Toolbar
+        <Toolbar />
       </Box>
       <Outlet />
       <Box
@@ -24,7 +26,7 @@ const AuthLayout = () => {
           m: 4,
         }}
       >
-        Auth Footer
+        <Footer />
       </Box>
     </Box>
   );

@@ -1,5 +1,5 @@
 import { Action, combineReducers, Reducer } from "@reduxjs/toolkit";
-import { logout } from "views/auth/store";
+import { logout } from "views/Auth/store";
 import { DynamicReducerNames, ReducerMap, StoreShape } from "./types";
 
 // reference: https://redux.js.org/usage/code-splitting#using-a-reducer-manager
