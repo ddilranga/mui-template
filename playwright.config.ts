@@ -1,7 +1,7 @@
 import { PlaywrightTestConfig } from "@playwright/test";
 
 const config: PlaywrightTestConfig = {
-  testDir: "../../e2e",
+  testDir: "e2e",
   use: {
     baseURL: "http://localhost:3000",
     browserName: "chromium",

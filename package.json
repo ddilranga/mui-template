@@ -7,7 +7,7 @@
     "serve": "vite preview",
     "lint": "eslint src/**",
     "lint:fix": "eslint --fix src/**",
-    "test": "playwright test --config=src/configs/playwright.config.ts"
+    "e2e": "playwright test"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
