@@ -69,6 +69,7 @@
     "setupFilesAfterEnv": [
       "../jest-setup.ts"
     ],
+    "coverageDirectory": "../coverage",
     "moduleNameMapper": {
       "\\.(css)$": "identity-obj-proxy"
     },
