@@ -1,9 +1,5 @@
+import type { User } from "interfaces";
 import { api } from "./baseApi";
-
-export interface User {
-  first_name: string;
-  last_name: string;
-}
 
 export interface UserResponse {
   user: User;
