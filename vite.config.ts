@@ -20,7 +20,6 @@ export default defineConfig({
       themes: resolve(__dirname, "./src/themes"),
     },
   },
-  envDir: "./src/configs",
   server: {
     port: 3000,
     open: true,

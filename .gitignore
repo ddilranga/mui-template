@@ -6,3 +6,5 @@ dist-ssr
 
 todo.md
 coverage
+.env.development
+.env.production
