@@ -2,7 +2,7 @@ import { RefObject, useEffect, useRef } from "react";
 
 // https://usehooks-ts.com/react-hook/use-event-listener
 
-type CustomEvents = "local-storage" | "session-storage";
+type CustomEvents = never;
 
 function useEventListener<T extends HTMLElement = HTMLDivElement>(
   eventName: keyof WindowEventMap | CustomEvents, // string to allow custom event
