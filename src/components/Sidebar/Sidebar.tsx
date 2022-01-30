@@ -10,9 +10,10 @@ import {
   ListItemText,
   ListSubheader,
 } from "@mui/material";
-import React, { useMemo, useState } from "react";
+import type { NavLinkGroup, NavLink as INavLink } from "interfaces";
+import { useMemo, useState, memo } from "react";
 import { SidebarContextProvider, useSidebarContext } from "./Sidebar.context";
-import { INavLink, INavLinkGroup, ISidebarProps } from "./Sidebar.types";
+import type SidebarProps from "./Sidebar.types";
 
 const NavLink = ({ route }: { route: INavLink }) => {
   const { isExpanded: isRouteExpanded, links, name, icon, onClick } = route;
@@ -52,7 +53,7 @@ const getNavLinks = (links: INavLink[]) => {
   return links.map((route) => <NavLink route={route} key={route.key} />);
 };
 
-const getRoutes = (groups: INavLinkGroup[]) => {
+const getRoutes = (groups: NavLinkGroup[]) => {
   return groups.map((group, index) => (
     <List
       key={index}
@@ -77,7 +78,7 @@ const Sidebar = ({
   toggle,
   groups,
   onLinkClick,
-}: ISidebarProps) => {
+}: SidebarProps) => {
   const navGroupRenderer = useMemo(() => getRoutes(groups), [groups]);
 
   return (
@@ -107,4 +108,4 @@ const Sidebar = ({
   );
 };
 
-export default React.memo(Sidebar);
+export default memo(Sidebar);

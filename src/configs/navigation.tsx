@@ -2,14 +2,14 @@ import {
   AccountBox as ProfileIcon,
   Dashboard as DashboardIcon,
 } from "@mui/icons-material";
-import { INavLinkGroup } from "components/Sidebar/Sidebar.types";
+import { NavLinkGroup } from "interfaces";
 
-const navigation: INavLinkGroup[] = [
+const navigation: NavLinkGroup[] = [
   {
     links: [
       {
         name: "Dashboard",
-        url: "/app/dashboard",
+        path: "/app/dashboard",
         key: "dashboard",
         icon: <DashboardIcon />,
       },
@@ -20,7 +20,7 @@ const navigation: INavLinkGroup[] = [
     links: [
       {
         name: "Profile",
-        url: "/pages/profile",
+        path: "/pages/profile",
         key: "profile",
         icon: <ProfileIcon />,
       },

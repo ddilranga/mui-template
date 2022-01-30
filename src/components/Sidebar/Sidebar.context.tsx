@@ -1,9 +1,9 @@
 import { createContext, ReactNode, useContext, useMemo } from "react";
-import { ISidebarProps } from "./Sidebar.types";
+import type SidebarProps from "./Sidebar.types";
 
 const SidebarContext = createContext<
   | {
-      onLinkClick: ISidebarProps["onLinkClick"];
+      onLinkClick: SidebarProps["onLinkClick"];
     }
   | undefined
 >(undefined);
@@ -25,7 +25,7 @@ function SidebarContextProvider({
   value: { onLinkClick },
 }: {
   children: ReactNode;
-  value: { onLinkClick: ISidebarProps["onLinkClick"] };
+  value: { onLinkClick: SidebarProps["onLinkClick"] };
 }) {
   const memoizedValue = useMemo(
     () => ({

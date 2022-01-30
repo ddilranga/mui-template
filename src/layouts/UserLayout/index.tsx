@@ -4,7 +4,7 @@ import { Box } from "@mui/system";
 import { SuspenseErrorFallback } from "components/Fallbacks";
 import ScrollToTop from "components/ScrollToTop";
 import Sidebar from "components/Sidebar";
-import { ISidebarProps } from "components/Sidebar/Sidebar.types";
+import type SidebarProps from "components/Sidebar/Sidebar.types";
 import Toolbar from "components/Toolbar";
 import { navigation } from "configs";
 import { Suspense, useCallback, useState } from "react";
@@ -59,10 +59,10 @@ const UserLayout = () => {
 
   const navigate = useNavigate();
 
-  const onLinkClick: ISidebarProps["onLinkClick"] = useCallback(
+  const onLinkClick: SidebarProps["onLinkClick"] = useCallback(
     (event, item) => {
       event?.preventDefault();
-      item?.url && navigate(item.url);
+      item?.path && navigate(item.path);
     },
     [navigate]
   );

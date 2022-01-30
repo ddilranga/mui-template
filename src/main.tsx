@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
 import App from "views/App";
 
 if (import.meta.env.DEV) {
@@ -8,7 +8,7 @@ if (import.meta.env.DEV) {
   worker.start();
 }
 
-ReactDOM.render(
+render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,

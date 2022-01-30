@@ -1,6 +1,6 @@
+import type { User } from "interfaces";
 import jwtDecode, { JwtPayload } from "jwt-decode";
 import { useCallback, useMemo, useState } from "react";
-import { User } from "services/auth";
 import {
   logout as storeLogout,
   selectCurrentUser,
