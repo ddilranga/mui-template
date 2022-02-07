@@ -4,6 +4,7 @@ import { store } from "store";
 import AuthWrapper from "./AuthWrapper";
 import RoutesHolder from "./RoutesHolder";
 import ThemeWrapper from "./ThemeWrapper";
+import "configs/i18n";
 
 function App() {
   return (
