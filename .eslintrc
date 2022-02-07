@@ -33,6 +33,8 @@
   },
   "ignorePatterns": ["node_modules", "src/assets/images"],
   "rules": {
-    "import/named": "error"
+    "import/named": "error",
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0
   }
 }
