@@ -1,14 +1,16 @@
 import {
-  addListenerAction,
-  createActionListenerMiddleware,
-  TypedAddListener,
-  TypedAddListenerAction,
+  createListenerMiddleware,
+  addListener,
 } from "@rtk-incubator/action-listener-middleware";
-import { RootState } from "./store";
+import type {
+  TypedStartListening,
+  TypedAddListener,
+} from "@rtk-incubator/action-listener-middleware";
 
-export const listenerMiddleware = createActionListenerMiddleware();
+import type { RootState } from "./store";
 
-export const addAppListener =
-  listenerMiddleware.addListener as TypedAddListener<RootState>;
-export const addAppListenerAction =
-  addListenerAction as TypedAddListenerAction<RootState>;
+export const listenerMiddleware = createListenerMiddleware();
+
+export const startAppListening =
+  listenerMiddleware.startListening as TypedStartListening<RootState>;
+export const addAppListener = addListener as TypedAddListener<RootState>;
