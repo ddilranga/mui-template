@@ -77,10 +77,4 @@ export interface NavLink {
    * Whether or not the link is disabled.
    */
   disabled?: boolean;
-
-  /**
-   * (Optional) Any additional properties to apply to the rendered links.
-   */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [propertyName: string]: any;
 }

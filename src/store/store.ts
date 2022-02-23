@@ -5,7 +5,7 @@ import authState from "views/Auth/store";
 import { listenerMiddleware } from "./listeners";
 import { createReducerManager } from "./reducerManager";
 
-const middlewares = [api.middleware, listenerMiddleware];
+const middlewares = [api.middleware, listenerMiddleware.middleware];
 
 const staticReducers = {
   [api.reducerPath]: api.reducer,
@@ -24,3 +24,5 @@ export const store = configureStore({
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
+
+export type StaticReducers = typeof staticReducers;
