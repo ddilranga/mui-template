@@ -1,22 +1,78 @@
-import { ThemeOptions } from "@mui/material";
+import { MantineThemeColorsOverride } from "@mantine/core";
 
-const palette: ThemeOptions["palette"] = {
-  mode: "dark",
-  primary: {
-    main: "#6863F2",
-  },
-  secondary: {
-    main: "#04BFAD",
-  },
-  info: {
-    main: "#B99AD9",
-  },
-  warning: {
-    main: "#F2CB05",
-  },
-  error: {
-    main: "#F24405",
-  },
+const palette: MantineThemeColorsOverride["colors"] = {
+  primary: [
+    "#F1F1FE",
+    "#DFDEFC",
+    "#C4C2FA",
+    "#A4A1F7",
+    "#8885F5",
+    "#6863F2",
+    "#2D26ED",
+    "#1510BC",
+    "#0E0B7F",
+    "#07053D",
+  ],
+  secondary: [
+    "#E1FEFB",
+    "#C3FEF8",
+    "#82FCF0",
+    "#46FBE9",
+    "#0AFAE2",
+    "#04BFAD",
+    "#039B8C",
+    "#027368",
+    "#024B44",
+    "#012824",
+  ],
+  info: [
+    "#F7F4FB",
+    "#F2ECF8",
+    "#E3D6F0",
+    "#D6C4E9",
+    "#C7ADE0",
+    "#B99AD9",
+    "#9463C4",
+    "#703DA3",
+    "#4A286B",
+    "#261538",
+  ],
+  warning: [
+    "#FEFAE6",
+    "#FEF6CD",
+    "#FDEC96",
+    "#FCE364",
+    "#FBD932",
+    "#F2CB05",
+    "#C3A304",
+    "#917903",
+    "#5F4F02",
+    "#322A01",
+  ],
+  error: [
+    "#FEEDE6",
+    "#FEDACD",
+    "#FDB196",
+    "#FC8D64",
+    "#FB6832",
+    "#F24405",
+    "#C33704",
+    "#912903",
+    "#5F1B02",
+    "#320E01",
+  ],
+  background: [
+    "#030507",
+    "#05070A",
+    "#090C11",
+    "#0A0F14",
+    "#0E141B",
+    "#2D4157",
+    "#4E7097",
+    "#839FBF",
+    "#C3D0E0",
+    "#E1E8EF",
+  ],
 };
 
 export default palette;

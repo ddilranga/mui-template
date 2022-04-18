@@ -1,10 +1,15 @@
-import { createTheme } from "@mui/material/styles";
+import { MantineThemeOverride } from "@mantine/core";
+import fontFamily from "themes/shared/fonts";
 import palette from "./palette";
-import typography from "./typography";
 
-const darkTheme = createTheme({
-  palette,
-  typography,
-});
+const darkTheme: MantineThemeOverride = {
+  colorScheme: "dark",
+  fontFamily,
+  primaryColor: "primary",
+  colors: palette,
+  headings: {
+    fontFamily,
+  },
+};
 
 export default darkTheme;

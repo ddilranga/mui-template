@@ -1,4 +1,4 @@
-import { Box } from "@mui/system";
+import { Box } from "@mantine/core";
 import { Outlet } from "react-router-dom";
 import Footer from "./components/Footer";
 import Toolbar from "./components/Toolbar";

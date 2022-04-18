@@ -1,7 +1,7 @@
-import { TextField, TextFieldProps } from "@mui/material";
+import { TextInput, TextInputProps } from "@mantine/core";
 import { useController, UseControllerProps } from "react-hook-form";
 
-type ControlledTextFieldProps<T> = UseControllerProps<T> & TextFieldProps;
+type ControlledTextFieldProps<T> = UseControllerProps<T> & TextInputProps;
 
 function ControlledTextField<T>(props: ControlledTextFieldProps<T>) {
   const {
@@ -10,12 +10,11 @@ function ControlledTextField<T>(props: ControlledTextFieldProps<T>) {
   } = useController(props);
 
   return (
-    <TextField
+    <TextInput
       {...props}
-      error={!!error}
-      helperText={error && error.message}
+      error={error && error.message}
       name={name}
-      value={value}
+      value={value as TextInputProps["value"]}
       onChange={onChange}
       onBlur={onBlur}
       ref={ref}

@@ -5,10 +5,6 @@ import { store } from "store";
 import AuthWrapper from "./AuthWrapper";
 import RoutesHolder from "./RoutesHolder";
 import ThemeWrapper from "./ThemeWrapper";
-import Toaster from "components/Notification";
-
-Toaster.info({ message: "some message" });
-Toaster.error({ message: "some message" });
 
 function App() {
   return (

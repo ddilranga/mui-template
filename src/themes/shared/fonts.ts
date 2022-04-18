@@ -1,6 +1,6 @@
-import { TypographyOptions } from "@mui/material/styles/createTypography";
+import { MantineTheme } from "@mantine/core";
 
-const fontFamily: TypographyOptions["fontFamily"] = [
+const fontFamily: MantineTheme["fontFamily"] = [
   "IBM Plex Sans",
   "-apple-system",
   "BlinkMacSystemFont",

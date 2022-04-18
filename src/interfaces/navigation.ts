@@ -1,3 +1,4 @@
+import { ThemeIconProps } from "@mantine/core";
 import { ReactElement } from "react";
 
 // reference: https://github.com/microsoft/fluentui/blob/master/packages/react/src/components/Nav/Nav.types.ts
@@ -77,4 +78,6 @@ export interface NavLink {
    * Whether or not the link is disabled.
    */
   disabled?: boolean;
+
+  color?: ThemeIconProps["color"];
 }

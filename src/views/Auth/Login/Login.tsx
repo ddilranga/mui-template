@@ -1,36 +1,29 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
-  AccountCircle,
-  Login as LoginIcon,
-  Visibility,
-  VisibilityOff,
-} from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
-import {
   Avatar,
   Box,
+  Button,
   Card,
-  CardActions,
-  CardContent,
-  Container,
   Grid,
-  IconButton,
-  InputAdornment,
-  Link,
+  Group,
+  PasswordInput,
   Stack,
-  Typography,
-} from "@mui/material";
-import authenticationSvg from "assets/images/Authentication_Isometric.svg";
+  Text,
+  ThemeIcon,
+  Title,
+  useMantineTheme,
+  Center,
+} from "@mantine/core";
 import avatarImg from "assets/images/undraw_male_avatar.svg";
 import {
   ControlledCheckbox,
   ControlledTextField,
 } from "components/FormControls";
 import { useAuth } from "hooks";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "services/auth";
+import { At, DoorEnter } from "tabler-icons-react";
 import * as yup from "yup";
 
 const loginSchema = yup.object({
@@ -47,6 +40,7 @@ export default function LoginPage() {
   const { login } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const theme = useMantineTheme();
 
   const [loginReq, { isLoading }] = useLoginMutation();
 
@@ -55,8 +49,6 @@ export default function LoginPage() {
     mode: "onChange",
     resolver: yupResolver(loginSchema),
   });
-
-  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -86,131 +78,99 @@ export default function LoginPage() {
   };
 
   return (
-    <Container>
-      <Grid container>
-        <Grid
-          item
-          xs={false}
-          md={8}
-          sx={{
-            backgroundImage: `url(${authenticationSvg})`,
-            backgroundRepeat: "no-repeat",
-            bgcolor: "#6863F2",
-            backgroundSize: "cover",
-            backgroundPosition: "right",
-          }}
-        />
-        <Grid item xs={12} md={4}>
-          <Card>
+    <Box sx={{ display: "flex", marginLeft: "auto", marginRight: "auto" }}>
+      <Grid>
+        <Grid.Col xs={12}>
+          <Card shadow={"md"} p="lg">
+            <Card.Section>
+              <Stack align="center" mt={4}>
+                <Avatar src={avatarImg} />
+                <Title order={3}>Login</Title>
+              </Stack>
+            </Card.Section>
+
             <Box
               component="form"
-              sx={{
-                "& .MuiTextField-root": { mt: 1 },
-              }}
               noValidate
               autoComplete="off"
               onSubmit={onSubmit}
             >
-              <Stack alignItems="center" mt={4}>
-                <Avatar src={avatarImg} sx={{ m: 1 }} />
-                <Typography component="h1" variant="h5">
-                  Login
-                </Typography>
-              </Stack>
-              <CardContent>
-                <Stack alignItems="flex-start" justifyContent="center">
-                  <ControlledTextField<FormValues>
-                    control={control}
-                    name="email"
-                    id="login-email"
-                    label="Email"
-                    type="email"
-                    fullWidth
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <AccountCircle color="primary" />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-
-                  <ControlledTextField<FormValues>
-                    control={control}
-                    name="password"
-                    id="login-password"
-                    label="Password"
-                    type="password"
-                    autoComplete="current-password"
-                    fullWidth
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            color="primary"
-                            aria-label="toggle password visibility"
-                            onClick={() => setShowPassword(!showPassword)}
-                            onMouseDown={(e) => e.preventDefault()}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Stack>
-
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent="space-between"
-                  sx={{ my: 2 }}
-                >
-                  <ControlledCheckbox<FormValues>
-                    control={control}
-                    name="rememberMe"
-                    labelProps={{
-                      label: (
-                        <Typography variant="body1">Remember me</Typography>
-                      ),
-                    }}
-                  />
-
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Stack>
-              </CardContent>
-
-              <CardActions
-                sx={{
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  mb: 4,
-                }}
-              >
-                <LoadingButton
-                  fullWidth
-                  sx={{
-                    borderRadius: 4,
+              <Stack align="flex-start" justify="center">
+                <ControlledTextField<FormValues>
+                  control={control}
+                  name="email"
+                  id="login-email"
+                  label="Email"
+                  type="email"
+                  styles={{
+                    root: {
+                      width: "100%",
+                    },
                   }}
-                  loading={isLoading}
-                  type="submit"
-                  color="primary"
-                  variant="contained"
-                  startIcon={<LoginIcon />}
-                >
-                  Login
-                </LoadingButton>
-                <Link href="#" variant="body2" sx={{ mt: 3 }}>
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </CardActions>
+                  icon={
+                    <ThemeIcon color="primary">
+                      <At />
+                    </ThemeIcon>
+                  }
+                />
+
+                <Controller
+                  control={control}
+                  name="password"
+                  render={({ field, fieldState }) => (
+                    <PasswordInput
+                      label="Password"
+                      value={field.value}
+                      onChange={(event) =>
+                        field.onChange(event.currentTarget.value)
+                      }
+                      error={fieldState.error?.message}
+                      styles={{
+                        root: {
+                          width: "100%",
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </Stack>
+
+              <Group align="center" position="apart" my={12}>
+                <ControlledCheckbox<FormValues>
+                  control={control}
+                  name="rememberMe"
+                  label="Remember me"
+                />
+
+                <Text size={"sm"} variant="link" component="a" href="#">
+                  Forgot password?
+                </Text>
+              </Group>
+
+              <Button
+                fullWidth
+                radius="sm"
+                loading={isLoading}
+                type="submit"
+                color="primary"
+                leftIcon={<DoorEnter />}
+              >
+                Login
+              </Button>
             </Box>
+
+            <Text
+              variant="link"
+              component="a"
+              href="#"
+              mt={3}
+              sx={{ display: "flex", justifyContent: "center" }}
+            >
+              Don&apos;t have an account? Sign Up
+            </Text>
           </Card>
-        </Grid>
+        </Grid.Col>
       </Grid>
-    </Container>
+    </Box>
   );
 }

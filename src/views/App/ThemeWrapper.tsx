@@ -1,4 +1,4 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { MantineProvider } from "@mantine/core";
 import { useAppSelector } from "hooks";
 import { ReactElement, useMemo } from "react";
 
@@ -6,18 +6,17 @@ import { lightTheme, darkTheme } from "themes";
 import { selectThemeMode } from "themes/store";
 
 const ThemeWrapper = ({ children }: { children: ReactElement }) => {
-  const mode = useAppSelector(selectThemeMode);
+  const colorScheme = useAppSelector(selectThemeMode);
 
   const theme = useMemo(
-    () => (mode === "light" ? lightTheme : darkTheme),
-    [mode]
+    () => (colorScheme === "light" ? lightTheme : darkTheme),
+    [colorScheme]
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <MantineProvider withNormalizeCSS withGlobalStyles theme={theme}>
       {children}
-    </ThemeProvider>
+    </MantineProvider>
   );
 };
 export default ThemeWrapper;

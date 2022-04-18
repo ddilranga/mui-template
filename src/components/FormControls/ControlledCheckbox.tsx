@@ -1,18 +1,19 @@
-import {
-  Checkbox,
-  CheckboxProps,
-  FormControlLabel,
-  FormControlLabelProps,
-  FormHelperText,
-} from "@mui/material";
+import { Checkbox, CheckboxProps, createStyles, Text } from "@mantine/core";
 import { useController, UseControllerProps } from "react-hook-form";
 
-type ControlledCheckboxProps<T> = {
-  labelProps: Omit<FormControlLabelProps, "control">;
-} & UseControllerProps<T> &
-  CheckboxProps;
+const useStyles = createStyles((theme) => ({
+  error: {
+    marginTop: theme.spacing.xs / 2,
+    wordBreak: "break-word",
+    color: theme.colors.red[6],
+  },
+}));
+
+type ControlledCheckboxProps<T> = UseControllerProps<T> & CheckboxProps;
 
 function ControlledCheckbox<T>(props: ControlledCheckboxProps<T>) {
+  const { classes } = useStyles();
+
   const {
     field: { value, onChange },
     fieldState: { error },
@@ -20,16 +21,12 @@ function ControlledCheckbox<T>(props: ControlledCheckboxProps<T>) {
 
   return (
     <>
-      <FormControlLabel
-        {...props.labelProps}
-        control={
-          <Checkbox
-            checked={value}
-            onChange={(e) => onChange(e.target.checked)}
-          />
-        }
+      <Checkbox
+        {...props}
+        checked={value as boolean}
+        onChange={(e) => onChange(e.currentTarget.checked)}
       />
-      <FormHelperText error={!!error}>{error && error.message}</FormHelperText>
+      {!!error && <Text className={classes.error}>{error.message}</Text>}
     </>
   );
 }

@@ -1,31 +1,42 @@
-import {
-  AccountBox as ProfileIcon,
-  Dashboard as DashboardIcon,
-} from "@mui/icons-material";
 import { NavLinkGroup } from "interfaces";
+import { Dashboard, Shield, ShieldCheck, User } from "tabler-icons-react";
 
 const navigation: NavLinkGroup[] = [
   {
+    name: "Apps",
     links: [
       {
         name: "Dashboard",
         path: "/app/dashboard",
         key: "dashboard",
-        icon: <DashboardIcon />,
+        icon: <Dashboard />,
+      },
+      {
+        name: "Example",
+        path: "/app/example",
+        key: "example",
+        icon: <Shield />,
+        links: [
+          {
+            name: "Child Link",
+            path: "/app/example/subLink",
+            key: "example/subLink",
+            icon: <ShieldCheck />,
+          },
+        ],
       },
     ],
-    name: "Apps",
   },
   {
+    name: "Pages",
     links: [
       {
         name: "Profile",
         path: "/pages/profile",
         key: "profile",
-        icon: <ProfileIcon />,
+        icon: <User />,
       },
     ],
-    name: "Pages",
   },
 ];
 
